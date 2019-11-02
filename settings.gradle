@@ -1,0 +1,5 @@
+include 'davinci-service',
+        'order-service-interface',
+        'order-service'
+
+includeBuild '../core-ng-project'
