@@ -11,5 +11,6 @@ public class CustomerServiceApp extends App {
         http().httpsPort(443);
         load(new SystemModule("sys.properties"));
         load(new OrderModule());
+        load(new FulfillmentModule());
     }
 }

@@ -9,8 +9,8 @@ public class UpdateOrderResponse {
     @Property(name = "id")
     public String id;
 
-    @Property(name = "item")
-    public String item;
+    @Property(name="fulfillment_ids")
+    public String fulfillmentIds;
 
     @Property(name = "address")
     public String address;

@@ -15,14 +15,14 @@ public class OrderService {
     public UpdateOrderResponse update(String id, UpdateOrderRequest request) {
         Order order=orderRepository.get(id).orElseThrow(() -> new NotFoundException("Cannot order, id=" + id));
         order.address = request.address;
-        order.totalCost = checkPrice(request.item) + request.tip;
-        order.fulfillmentIds = request.item;
+        order.totalCost = checkPrice(request.fulfillmentIds) + request.tip;
+        order.fulfillmentIds = request.fulfillmentIds;
         orderRepository.partialUpdate(order);
         UpdateOrderResponse updateOrderResponse = new UpdateOrderResponse();
         updateOrderResponse.id = order.id;
         updateOrderResponse.address = order.address;
         updateOrderResponse.totalCost = order.totalCost;
-        updateOrderResponse.item = order.fulfillmentIds;
+        updateOrderResponse.fulfillmentIds = order.fulfillmentIds;
 
         return updateOrderResponse;
     }
@@ -31,15 +31,15 @@ public class OrderService {
         Order order = new Order();
         order.id = UUID.randomUUID().toString();
         order.address = request.address;
-        order.totalCost = checkPrice(request.item) + request.tip;
-        order.fulfillmentIds = request.item;
+        order.totalCost = checkPrice(request.fulfillmentIds) + request.tip;
+        order.fulfillmentIds = request.fulfillmentIds;
         orderRepository.insert(order);
 
         CreateOrderResponse createOrderResponse = new CreateOrderResponse();
         createOrderResponse.id = order.id;
         createOrderResponse.address = order.address;
         createOrderResponse.totalCost = order.totalCost;
-        createOrderResponse.item = order.fulfillmentIds;
+        createOrderResponse.fulfillmentIds = order.fulfillmentIds;
 
         return createOrderResponse;
     }
@@ -49,7 +49,7 @@ public class OrderService {
         ReadOrderResponse readOrderResponse = new ReadOrderResponse();
         readOrderResponse.address = order.address;
         readOrderResponse.id = order.id;
-        readOrderResponse.item = order.fulfillmentIds;
+        readOrderResponse.fulfillmentIds = order.fulfillmentIds;
         readOrderResponse.totalCost = order.totalCost;
         return readOrderResponse;
     }

@@ -4,6 +4,7 @@ import core.framework.api.json.Property;
 import core.framework.api.validate.NotBlank;
 import core.framework.api.validate.NotNull;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -13,8 +14,8 @@ public class CreateOrderResponse {
     @Property(name = "id")
     public String id;
 
-    @Property(name = "item")
-    public String item;
+    @Property(name="fulfillment_ids")
+    public String fulfillmentIds;
 
     @Property(name = "address")
     public String address;
