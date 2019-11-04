@@ -10,9 +10,6 @@ public class Order {
     @Column(name="id")
     public String id;
 
-    @Column(name="fulfillment_ids")
-    public String fulfillmentIds;
-
     @Column(name="address")
     public String address;
 

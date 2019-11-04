@@ -6,15 +6,15 @@ import core.framework.api.validate.NotBlank;
 import core.framework.api.validate.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author: Cheffey
  */
 public class CreateOrderRequest {
     @NotNull
-    @NotBlank
-    @Property(name="fulfillment_ids")
-    public String fulfillmentIds;
+    @Property(name="items")
+    public List<String> items;
 
     @NotNull
     @NotBlank

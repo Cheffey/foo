@@ -7,13 +7,16 @@ import java.util.List;
 /**
  * @author: Cheffey
  */
-public class CreateFulfillmentResponse {
+public class SearchFulfillmentRequest {
+    @Property(name = "order_id")
+    public String orderId;
+
     @Property(name = "id")
     public String id;
 
-    @Property(name="items")
+    @Property(name = "items")
     public List<String> items;
 
-    @Property(name="status")
+    @Property(name = "status")
     public String status;
 }

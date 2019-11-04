@@ -1,11 +1,9 @@
 package app.customerservice.api.order;
 
+import app.customerservice.api.fulfillment.FulfillmentView;
 import core.framework.api.json.Property;
-import core.framework.api.validate.NotBlank;
-import core.framework.api.validate.NotNull;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.List;
 
 /**
  * @author: Cheffey
@@ -14,12 +12,12 @@ public class CreateOrderResponse {
     @Property(name = "id")
     public String id;
 
-    @Property(name="fulfillment_ids")
-    public String fulfillmentIds;
-
     @Property(name = "address")
     public String address;
 
-    @Property(name = "total-cost")
+    @Property(name = "total_cost")
     public Double totalCost;
+
+    @Property(name="fulfillments")
+    public List<FulfillmentView> fulfillments;
 }

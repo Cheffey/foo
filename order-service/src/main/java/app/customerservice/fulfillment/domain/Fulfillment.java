@@ -5,18 +5,24 @@ import core.framework.mongo.Collection;
 import core.framework.mongo.Field;
 import core.framework.mongo.Id;
 
-@Collection(name="fulfillments")
+import java.util.List;
+
+@Collection(name = "fulfillments")
 public class Fulfillment {
     @Id
     @NotNull
-    @Field(name="id")
-    public java.lang.String id;
+    @Field(name = "id")
+    public String id;
 
     @NotNull
-    @Field(name="items")
-    public String items;
+    @Field(name = "order_id")
+    public String orderId;
 
     @NotNull
-    @Field(name="status")
+    @Field(name = "items")
+    public List<String> items;
+
+    @NotNull
+    @Field(name = "status")
     public Status status;
 }

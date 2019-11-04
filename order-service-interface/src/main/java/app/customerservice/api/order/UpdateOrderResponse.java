@@ -1,6 +1,9 @@
 package app.customerservice.api.order;
 
+import app.customerservice.api.fulfillment.FulfillmentView;
 import core.framework.api.json.Property;
+
+import java.util.List;
 
 /**
  * @author: Cheffey
@@ -9,8 +12,8 @@ public class UpdateOrderResponse {
     @Property(name = "id")
     public String id;
 
-    @Property(name="fulfillment_ids")
-    public String fulfillmentIds;
+    @Property(name="fulfillments")
+    public List<FulfillmentView> fulfillments;
 
     @Property(name = "address")
     public String address;

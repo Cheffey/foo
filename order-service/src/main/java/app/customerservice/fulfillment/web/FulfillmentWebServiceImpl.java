@@ -1,6 +1,6 @@
 package app.customerservice.fulfillment.web;
 
-import app.customerservice.api.AJAXFulfillmentWebService;
+import app.customerservice.api.FulfillmentWebService;
 import app.customerservice.api.fulfillment.*;
 import app.customerservice.fulfillment.service.FulfillmentService;
 import core.framework.inject.Inject;
@@ -8,7 +8,7 @@ import core.framework.inject.Inject;
 /**
  * @author: Cheffey
  */
-public class AJAXFulfillmentWebServiceImpl implements AJAXFulfillmentWebService{
+public class FulfillmentWebServiceImpl implements FulfillmentWebService {
     @Inject
     FulfillmentService fulfillmentService;
 
@@ -18,13 +18,18 @@ public class AJAXFulfillmentWebServiceImpl implements AJAXFulfillmentWebService{
     }
 
     @Override
+    public SearchFulfillmentResponse search(SearchFulfillmentRequest request) {
+        return fulfillmentService.search(request);
+    }
+
+    @Override
     public CreateFulfillmentResponse create(CreateFulfillmentRequest request) {
         return fulfillmentService.create(request);
     }
 
     @Override
-    public ReadFulfillmentResponse read(String id) {
-        return fulfillmentService.read(id);
+    public ReadFulfillmentResponse get(String id) {
+        return fulfillmentService.get(id);
     }
 
     @Override

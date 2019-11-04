@@ -7,10 +7,14 @@ import core.framework.api.web.service.*;
 /**
  * @author: Cheffey
  */
-public interface AJAXFulfillmentWebService {
+public interface FulfillmentWebService {
     @PUT
     @Path("/fulfillment/:id")
     UpdateFulfillmentResponse update(@PathParam("id") String id, UpdateFulfillmentRequest request);
+
+    @PUT
+    @Path("/fulfillment/")
+    SearchFulfillmentResponse search(SearchFulfillmentRequest request);
 
     @POST
     @Path("/fulfillment")
@@ -19,7 +23,7 @@ public interface AJAXFulfillmentWebService {
 
     @GET
     @Path("/fulfillment/:id")
-    ReadFulfillmentResponse read(@PathParam("id") String id);
+    ReadFulfillmentResponse get(@PathParam("id") String id);
 
     @DELETE
     @Path("/fulfillment/:id")

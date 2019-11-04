@@ -7,10 +7,14 @@ import core.framework.api.web.service.*;
 /**
  * @author: Cheffey
  */
-public interface AJAXOrderWebService {
+public interface OrderWebService {
     @PUT
     @Path("/order/:id")
     UpdateOrderResponse update(@PathParam("id") String id, UpdateOrderRequest request);
+
+    @PUT
+    @Path("/order")
+    SearchOrderResponse search(SearchOrderRequest request);
 
     @POST
     @Path("/order")
@@ -19,7 +23,7 @@ public interface AJAXOrderWebService {
 
     @GET
     @Path("/order/:id")
-    ReadOrderResponse read(@PathParam("id")String id);
+    ReadOrderResponse get(@PathParam("id")String id);
 
     @DELETE
     @Path("/order/:id")
