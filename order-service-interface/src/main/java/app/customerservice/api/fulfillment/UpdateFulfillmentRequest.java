@@ -8,7 +8,7 @@ import core.framework.api.validate.NotNull;
  */
 public class UpdateFulfillmentRequest {
     @Property(name = "id")
-    public java.lang.String id;
+    public String id;
 
     @Property(name="items")
     public String items;

@@ -15,6 +15,6 @@ public class UpdateOrderResponse {
     @Property(name = "address")
     public String address;
 
-    @Property(name = "total-cost")
+    @Property(name = "total_cost")
     public Double totalCost;
 }

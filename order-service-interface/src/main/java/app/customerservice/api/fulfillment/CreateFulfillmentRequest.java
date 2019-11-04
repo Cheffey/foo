@@ -8,10 +8,10 @@ import core.framework.api.validate.NotNull;
  */
 public class CreateFulfillmentRequest {
     @NotNull
-    @Property(name="items")
+    @Property(name = "items")
     public String items;
 
     @NotNull
-    @Property(name="status")
+    @Property(name = "status")
     public String status;
 }
