@@ -4,7 +4,14 @@ import app.customerservice.api.fulfillment.CreateFulfillmentRequest;
 import app.customerservice.api.fulfillment.CreateFulfillmentResponse;
 import app.customerservice.api.fulfillment.FulfillmentView;
 import app.customerservice.api.fulfillment.SearchFulfillmentRequest;
-import app.customerservice.api.order.*;
+import app.customerservice.api.order.CreateOrderRequest;
+import app.customerservice.api.order.CreateOrderResponse;
+import app.customerservice.api.order.OrderView;
+import app.customerservice.api.order.ReadOrderResponse;
+import app.customerservice.api.order.SearchOrderRequest;
+import app.customerservice.api.order.SearchOrderResponse;
+import app.customerservice.api.order.UpdateOrderRequest;
+import app.customerservice.api.order.UpdateOrderResponse;
 import app.customerservice.fulfillment.service.FulfillmentService;
 import app.customerservice.order.domain.Order;
 import core.framework.db.Database;
@@ -40,15 +47,11 @@ public class OrderService {
             transaction.commit();
         }
         if (request.items != null) {
-            updateOrderResponse.fulfillments = request.items.stream().map(p -> {
+            updateOrderResponse.fulfillments = request.items.stream().map(item -> {
                 CreateFulfillmentRequest createFulfillmentRequest = new CreateFulfillmentRequest();
-                createFulfillmentRequest.items = Arrays.asList(p);
+                createFulfillmentRequest.items = Arrays.asList(item);
                 createFulfillmentRequest.orderId = order.id;
-                CreateFulfillmentResponse createFulfillmentResponse = fulfillmentService.create(createFulfillmentRequest);
-                FulfillmentView fulfillmentView = new FulfillmentView();
-                fulfillmentView.items = createFulfillmentResponse.items;
-                fulfillmentView.status = createFulfillmentResponse.status;
-                return fulfillmentView;
+                return view(fulfillmentService.create(createFulfillmentRequest));
             }).collect(Collectors.toList());
         } else {
             SearchFulfillmentRequest searchRequest = new SearchFulfillmentRequest();
@@ -61,6 +64,7 @@ public class OrderService {
         return updateOrderResponse;
     }
 
+
     public CreateOrderResponse create(CreateOrderRequest request) {
         CreateOrderResponse createOrderResponse = new CreateOrderResponse();
         Order order = new Order();
@@ -72,12 +76,7 @@ public class OrderService {
             CreateFulfillmentRequest createFulfillmentRequest = new CreateFulfillmentRequest();
             createFulfillmentRequest.items = Arrays.asList(p);
             createFulfillmentRequest.orderId = order.id;
-            CreateFulfillmentResponse createFulfillmentResponse = fulfillmentService.create(createFulfillmentRequest);
-            FulfillmentView fulfillmentView = new FulfillmentView();
-            fulfillmentView.id = createFulfillmentResponse.id;
-            fulfillmentView.items = createFulfillmentResponse.items;
-            fulfillmentView.status = createFulfillmentResponse.status;
-            return fulfillmentView;
+            return view(fulfillmentService.create(createFulfillmentRequest));
         }).collect(Collectors.toList());
         createOrderResponse.id = order.id;
         createOrderResponse.address = order.address;
@@ -88,9 +87,7 @@ public class OrderService {
     public ReadOrderResponse get(String id) {
         Order order = orderRepository.get(id).orElseThrow(() -> new NotFoundException(("Cannot find order with id: " + id)));
         ReadOrderResponse readOrderResponse = new ReadOrderResponse();
-        SearchFulfillmentRequest searchRequest = new SearchFulfillmentRequest();
-        searchRequest.orderId = id;
-        readOrderResponse.fulfillments = fulfillmentService.search(searchRequest).fulfillments;
+        readOrderResponse.fulfillments = fulfillmentService.search(searchById(id)).fulfillments;
         readOrderResponse.address = order.address;
         readOrderResponse.id = order.id;
         readOrderResponse.totalCost = order.totalCost;
@@ -116,14 +113,12 @@ public class OrderService {
         if (request.tip != null) {
             query.where("tip = ?", request.tip);
         }
-        searchOrderResponse.orderViews = query.fetch().stream().map(p -> {
+        searchOrderResponse.orderViews = query.fetch().stream().map(order -> {
             OrderView orderView = new OrderView();
-            orderView.address = p.address;
-            orderView.id = p.id;
-            orderView.totalCost = p.totalCost;
-            SearchFulfillmentRequest searchFulfillmentRequest = new SearchFulfillmentRequest();
-            searchFulfillmentRequest.id = p.id;
-            orderView.fulfillments = fulfillmentService.search(searchFulfillmentRequest).fulfillments;
+            orderView.address = order.address;
+            orderView.id = order.id;
+            orderView.totalCost = order.totalCost;
+            orderView.fulfillments = fulfillmentService.search(searchById(order.id)).fulfillments;
             return orderView;
         }).collect(Collectors.toList());
         searchOrderResponse.total = searchOrderResponse.orderViews.size();
@@ -133,18 +128,22 @@ public class OrderService {
     private double checkPrice(List<String> items) {
         int total = 0;
         for (String item : items) {
-            total += ((item.hashCode()) % 250) / 10;
+            total += (Math.abs(item.hashCode()) % 250) / 10;
         }
         return total;
     }
 
-//    private FulfillmentView view(Object obj) {
-//        FulfillmentView result = new FulfillmentView();
-//        result.id = obj.id;
-//        result.email = customer.email;
-//        result.firstName = customer.firstName;
-//        result.lastName = customer.lastName;
-//        result.updatedTime = customer.updatedTime;
-//        return result;
-//    }
+    private FulfillmentView view(CreateFulfillmentResponse createFulfillmentResponse) {
+        FulfillmentView fulfillmentView = new FulfillmentView();
+        fulfillmentView.id = createFulfillmentResponse.id;
+        fulfillmentView.items = createFulfillmentResponse.items;
+        fulfillmentView.status = createFulfillmentResponse.status;
+        return fulfillmentView;
+    }
+
+    private SearchFulfillmentRequest searchById(String id) {
+        SearchFulfillmentRequest searchRequest = new SearchFulfillmentRequest();
+        searchRequest.orderId = id;
+        return searchRequest;
+    }
 }

@@ -1,0 +1,1 @@
+UPDATE `orders` set total_cost=total_cost+1;

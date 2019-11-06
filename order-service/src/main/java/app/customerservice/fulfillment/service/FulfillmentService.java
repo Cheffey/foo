@@ -1,9 +1,14 @@
 package app.customerservice.fulfillment.service;
 
 import app.customerservice.api.fulfillment.CreateFulfillmentRequest;
-import app.customerservice.api.fulfillment.UpdateFulfillmentRequest;
-import app.customerservice.api.fulfillment.*;
+import app.customerservice.api.fulfillment.CreateFulfillmentResponse;
+import app.customerservice.api.fulfillment.FulfillmentStatusResponse;
 import app.customerservice.api.fulfillment.FulfillmentView;
+import app.customerservice.api.fulfillment.ReadFulfillmentResponse;
+import app.customerservice.api.fulfillment.SearchFulfillmentRequest;
+import app.customerservice.api.fulfillment.SearchFulfillmentResponse;
+import app.customerservice.api.fulfillment.UpdateFulfillmentRequest;
+import app.customerservice.api.fulfillment.UpdateFulfillmentResponse;
 import app.customerservice.fulfillment.domain.Fulfillment;
 import app.customerservice.fulfillment.domain.Status;
 import com.mongodb.client.model.Updates;
@@ -77,19 +82,33 @@ public class FulfillmentService {
     public SearchFulfillmentResponse search(SearchFulfillmentRequest request) {
         SearchFulfillmentResponse searchFulfillmentResponse = new SearchFulfillmentResponse();
         List<Bson> filters = new ArrayList<>();
-        filters.add(eq("_id", request.id));
-        filters.add(eq("orderId", request.orderId));
-        filters.add(eq("items", request.items));
-        filters.add(eq("status", request.status));
+        //filters.add(eq("_id", request.id));
+        if (request.orderId != null) {
+            filters.add(eq("order_id", request.orderId));
+        }
+        if (request.items != null) {
+            filters.add(eq("items", request.items));
+        }
+        if (request.status != null) {
+            filters.add(eq("status", request.status));
+        }
         searchFulfillmentResponse.fulfillments = fulfillmentCollection.find(and(filters))
-                .stream().map(a -> {//这个是不是很没必要？直接用循环就行？
+            .stream().map(fulfillment -> {
                     FulfillmentView fulfillmentView = new FulfillmentView();
-                    fulfillmentView.id = a.id;
-                    fulfillmentView.status = a.status.toString();
-                    fulfillmentView.items = a.items;
+                fulfillmentView.id = fulfillment.id;
+                fulfillmentView.status = fulfillment.status.toString();
+                fulfillmentView.items = fulfillment.items;
                     return fulfillmentView;
                 }).collect(Collectors.toList());
         searchFulfillmentResponse.total=searchFulfillmentResponse.fulfillments.size();
         return searchFulfillmentResponse;
+    }
+
+    public UpdateFulfillmentResponse cancel(UpdateFulfillmentRequest request) {
+        return new UpdateFulfillmentResponse();
+    }
+
+    public FulfillmentStatusResponse getStatus(String id) {
+        return new FulfillmentStatusResponse();
     }
 }

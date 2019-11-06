@@ -1,7 +1,6 @@
 package app.customerservice.api.fulfillment;
 
 import core.framework.api.json.Property;
-import core.framework.api.validate.NotNull;
 
 import java.util.List;
 

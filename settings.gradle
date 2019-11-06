@@ -1,5 +1,5 @@
-include 'davinci-service',
+include 'orders-db-migration',
+        'fulfillments-mongo-migration',
         'order-service-interface',
-        'order-service'
-
-includeBuild '../core-ng-project'
+        'order-service',
+        'http-client-service'
