@@ -67,6 +67,13 @@ project(':order-site') {
     }
 }
 
+//project(':http-client-service') {
+//    dependencies {
+//        implementation "org.apache.httpcomponents:httpclient:4.5.3"
+//        implementation "com.alibaba:fastjson:1.2.4"
+//    }
+//}
+
 configure(subprojects.findAll { it.name.endsWith('-db-migration') }) {
     apply from: file("${rootDir}/gradle/db-migration.gradle")
 

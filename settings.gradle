@@ -2,9 +2,7 @@ include 'order-service-db-migration',
         'order-service-mongo-migration',
         'order-service-interface',
         'order-service',
-        'http-client-service',
-        'website',
-        'backoffice'
-include 'order-site'
-include 'bo-order-site'
+//        'http-client-service',
+        'order-site',
+        'bo-order-site'
 
