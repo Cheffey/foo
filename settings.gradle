@@ -1,5 +1,10 @@
-include 'orders-db-migration',
-        'fulfillments-mongo-migration',
+include 'order-service-db-migration',
+        'order-service-mongo-migration',
         'order-service-interface',
         'order-service',
-        'http-client-service'
+        'http-client-service',
+        'website',
+        'backoffice'
+include 'order-site'
+include 'bo-order-site'
+

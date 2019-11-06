@@ -17,8 +17,16 @@ subprojects {
 def coreNGVersion = '7.0.0'
 def hsqlVersion = '2.5.0'
 
-configure([project(':order-service'),
-           project(':http-client-service')]) {
+configure(subprojects.findAll { it.name.matches('.*-service') }) {
+    apply from: file("${rootDir}/gradle/app.gradle")
+    dependencies {
+        implementation "core.framework:core-ng:${coreNGVersion}"
+        testImplementation "core.framework:core-ng-test:${coreNGVersion}"
+    }
+}
+
+configure([project(':bo-order-site'),
+           project(':order-site')]) {
     apply from: file("${rootDir}/gradle/app.gradle")
     dependencies {
         implementation "core.framework:core-ng:${coreNGVersion}"
@@ -35,6 +43,24 @@ configure(subprojects.findAll { it.name.matches('.*-service-interface') }) {
 
 project(':order-service') {
     dependencies {
+        implementation project(':order-service-interface')
+        implementation "core.framework:core-ng-mongo:${coreNGVersion}"
+        runtimeOnly 'mysql:mysql-connector-java:8.0.15'
+    }
+}
+
+project(':bo-order-site') {
+    dependencies {
+        implementation project(':order-service')
+        implementation project(':order-service-interface')
+        implementation "core.framework:core-ng-mongo:${coreNGVersion}"
+        runtimeOnly 'mysql:mysql-connector-java:8.0.15'
+    }
+}
+
+project(':order-site') {
+    dependencies {
+        implementation project(':order-service')
         implementation project(':order-service-interface')
         implementation "core.framework:core-ng-mongo:${coreNGVersion}"
         runtimeOnly 'mysql:mysql-connector-java:8.0.15'
