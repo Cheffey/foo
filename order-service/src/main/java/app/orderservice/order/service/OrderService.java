@@ -21,7 +21,6 @@ import core.framework.db.Transaction;
 import core.framework.inject.Inject;
 import core.framework.web.exception.NotFoundException;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -49,7 +48,7 @@ public class OrderService {
         if (request.items != null) {
             updateOrderResponse.fulfillments = request.items.stream().map(item -> {
                 CreateFulfillmentRequest createFulfillmentRequest = new CreateFulfillmentRequest();
-                createFulfillmentRequest.items = Arrays.asList(item);
+                createFulfillmentRequest.items = List.of(item);
                 createFulfillmentRequest.orderId = order.id;
                 return view(fulfillmentService.create(createFulfillmentRequest));
             }).collect(Collectors.toList());
@@ -72,9 +71,9 @@ public class OrderService {
         order.address = request.address;
         order.totalCost = checkPrice(request.items) + request.tip;
         orderRepository.insert(order);
-        createOrderResponse.fulfillments = request.items.stream().map(p -> {
+        createOrderResponse.fulfillments = request.items.stream().map(item -> {
             CreateFulfillmentRequest createFulfillmentRequest = new CreateFulfillmentRequest();
-            createFulfillmentRequest.items = Arrays.asList(p);
+            createFulfillmentRequest.items = List.of(item);
             createFulfillmentRequest.orderId = order.id;
             return view(fulfillmentService.create(createFulfillmentRequest));
         }).collect(Collectors.toList());
@@ -85,7 +84,7 @@ public class OrderService {
     }
 
     public ReadOrderResponse get(String id) {
-        Order order = orderRepository.get(id).orElseThrow(() -> new NotFoundException(("Cannot find order with id: " + id)));
+        Order order = orderRepository.get(id).orElseThrow(() -> new NotFoundException("Cannot find order with id: " + id));
         ReadOrderResponse readOrderResponse = new ReadOrderResponse();
         readOrderResponse.fulfillments = fulfillmentService.search(searchById(id)).fulfillments;
         readOrderResponse.address = order.address;
@@ -105,7 +104,7 @@ public class OrderService {
             query.where("address = ?", request.address);
         }
         if (request.items != null) {
-            query.where("items = ?", request.items);//for further design
+            query.where("items = ?", request.items); //for further design
         }
         if (request.id != null) {
             query.where("id = ?", request.id);
@@ -128,7 +127,7 @@ public class OrderService {
     private double checkPrice(List<String> items) {
         int total = 0;
         for (String item : items) {
-            total += (Math.abs(item.hashCode()) % 250) / 10;
+            total += (item.hashCode() % 250) / 10;
         }
         return total;
     }

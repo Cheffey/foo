@@ -29,8 +29,8 @@ public class FulfillmentService {
     MongoCollection<Fulfillment> fulfillmentCollection;
 
     public UpdateFulfillmentResponse update(String id, UpdateFulfillmentRequest request) {
-        Fulfillment fulfillment = fulfillmentCollection.get(id).orElseThrow(() -> new NotFoundException("can't get fulfillment with id: " + id));
-        List<Bson> updates = new ArrayList<Bson>();
+        fulfillmentCollection.get(id).orElseThrow(() -> new NotFoundException("can't get fulfillment with id: " + id));
+        List<Bson> updates = new ArrayList<>();
         if (request.orderId != null) {
             updates.add(Updates.set("order_id", request.orderId));
         }
@@ -40,7 +40,7 @@ public class FulfillmentService {
         if (request.status != null) {
             updates.add(Updates.set("status", request.status));
         }
-        if (updates.size() > 0) {
+        if (!updates.isEmpty()) {
             fulfillmentCollection.update(eq("_id", id), Updates.combine(updates));
         }
         UpdateFulfillmentResponse updateFulfillmentResponse = new UpdateFulfillmentResponse();
@@ -92,11 +92,11 @@ public class FulfillmentService {
             filters.add(eq("status", request.status));
         }
         searchFulfillmentResponse.fulfillments = fulfillmentCollection.find(and(filters))
-            .stream().map(fulfillment -> {
+                .stream().map(fulfillment -> {
                     FulfillmentView fulfillmentView = new FulfillmentView();
-                fulfillmentView.id = fulfillment.id;
-                fulfillmentView.status = fulfillment.status.toString();
-                fulfillmentView.items = fulfillment.items;
+                    fulfillmentView.id = fulfillment.id;
+                    fulfillmentView.status = fulfillment.status.toString();
+                    fulfillmentView.items = fulfillment.items;
                     return fulfillmentView;
                 }).collect(Collectors.toList());
         searchFulfillmentResponse.total = searchFulfillmentResponse.fulfillments.size();
