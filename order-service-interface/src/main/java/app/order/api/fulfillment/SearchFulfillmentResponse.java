@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author: Cheffey
  */
-public class BOSearchFulfillmentResponse {
+public class SearchFulfillmentResponse {
     @Property(name = "total")
     public Integer total;
 

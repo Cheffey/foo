@@ -4,7 +4,6 @@ import app.order.api.order.CancelOrderResponse;
 import app.order.api.order.CreateOrderRequest;
 import app.order.api.order.CreateOrderResponse;
 import app.order.api.order.GetOrderResponse;
-import app.order.api.order.OrderStatusResponse;
 import app.order.api.order.SearchOrderRequest;
 import app.order.api.order.SearchOrderResponse;
 import core.framework.api.http.HTTPStatus;
@@ -18,26 +17,21 @@ import core.framework.api.web.service.ResponseStatus;
 /**
  * @author: Cheffey
  */
-public interface OrderWebService {
-    @GET
-    @Path("/order/:id")
-    GetOrderResponse get(@PathParam("id") String id);
-
+public interface OrderAJAXWebService {
     @PUT
-    @Path("/order/:id/cancel")
+    @Path("/ajax/order/:id")
     CancelOrderResponse cancel(@PathParam("id") String id);
 
     @PUT
-    @Path("/order")
+    @Path("/ajax/order")
     SearchOrderResponse search(SearchOrderRequest request);
 
     @POST
-    @Path("/order")
+    @Path("/ajax/order")
     @ResponseStatus(HTTPStatus.CREATED)
     CreateOrderResponse create(CreateOrderRequest request);
 
     @GET
-    @Path("/order/:id/status")
-    OrderStatusResponse getStatus(@PathParam("id") String id);
-
+    @Path("/ajax/order/:id")
+    GetOrderResponse get(@PathParam("id") String id);
 }

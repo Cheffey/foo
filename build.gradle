@@ -44,8 +44,6 @@ configure(subprojects.findAll { it.name.matches('.*-interface') }) {
 project(':order-service') {
     dependencies {
         implementation project(':order-service-interface')
-        implementation project(':order-service-bo-ajax-interface')
-        implementation project(':order-service-ajax-interface')
         implementation "core.framework:core-ng-mongo:${coreNGVersion}"
         runtimeOnly 'mysql:mysql-connector-java:8.0.15'
     }
@@ -54,14 +52,14 @@ project(':order-service') {
 project(':bo-order-site') {
     dependencies {
         implementation project(':order-service-interface')
-        implementation project(':order-service-bo-ajax-interface')
+        implementation project(':order-site-bo-ajax-interface')
     }
 }
 
 project(':order-site') {
     dependencies {
         implementation project(':order-service-interface')
-        implementation project(':order-service-ajax-interface')
+        implementation project(':order-site-ajax-interface')
     }
 }
 

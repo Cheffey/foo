@@ -2,12 +2,12 @@ package app.order.fulfillment.service;
 
 import app.order.api.fulfillment.BOCreateFulfillmentRequest;
 import app.order.api.fulfillment.BOCreateFulfillmentResponse;
-import app.order.api.fulfillment.FulfillmentView;
-import app.order.api.fulfillment.GetFulfillmentResponse;
 import app.order.api.fulfillment.BOSearchFulfillmentRequest;
 import app.order.api.fulfillment.BOSearchFulfillmentResponse;
 import app.order.api.fulfillment.BOUpdateFulfillmentRequest;
 import app.order.api.fulfillment.BOUpdateFulfillmentResponse;
+import app.order.api.fulfillment.GetFulfillmentResponse;
+import app.order.api.order.CompleteFulfillment;
 import app.order.fulfillment.domain.Fulfillment;
 import app.order.fulfillment.domain.Status;
 import com.mongodb.client.model.Updates;
@@ -81,7 +81,6 @@ public class FulfillmentService {
     public BOSearchFulfillmentResponse search(BOSearchFulfillmentRequest request) {
         BOSearchFulfillmentResponse boSearchFulfillmentResponse = new BOSearchFulfillmentResponse();
         List<Bson> filters = new ArrayList<>();
-        //filters.add(eq("_id", request.id));
         if (request.orderId != null) {
             filters.add(eq("order_id", request.orderId));
         }
@@ -92,15 +91,28 @@ public class FulfillmentService {
             filters.add(eq("status", request.status));
         }
         boSearchFulfillmentResponse.fulfillments = fulfillmentCollection.find(and(filters))
-                .stream().map(fulfillment -> {
-                    FulfillmentView fulfillmentView = new FulfillmentView();
-                    fulfillmentView.id = fulfillment.id;
-                    fulfillmentView.status = fulfillment.status.toString();
-                    fulfillmentView.items = fulfillment.items;
-                    return fulfillmentView;
+            .stream().map(flmnt -> {
+                BOSearchFulfillmentResponse.Fulfillment fulfillment = new BOSearchFulfillmentResponse.Fulfillment();
+                fulfillment.id = flmnt.id;
+                fulfillment.status = flmnt.status.toString();
+//                    fulfillment.items = flmnt.items;
+                return fulfillment;
                 }).collect(Collectors.toList());
         boSearchFulfillmentResponse.total = boSearchFulfillmentResponse.fulfillments.size();
         return boSearchFulfillmentResponse;
+    }
+
+    public List<CompleteFulfillment> searchByOrderId(String orderId) {
+        List<Bson> filters = new ArrayList<>();
+        filters.add(eq("order_id", orderId));
+        return fulfillmentCollection.find(and(filters))
+            .stream().map(flmnt -> {
+                CompleteFulfillment fulfillment = new CompleteFulfillment();
+                fulfillment.id = flmnt.id;
+                fulfillment.status = flmnt.status.toString();
+                fulfillment.items = flmnt.items;
+                return fulfillment;
+            }).collect(Collectors.toList());
     }
 
     public BOUpdateFulfillmentResponse cancel(BOUpdateFulfillmentRequest request) {

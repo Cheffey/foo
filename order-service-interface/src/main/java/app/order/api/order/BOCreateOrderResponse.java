@@ -1,6 +1,5 @@
 package app.order.api.order;
 
-import app.order.api.fulfillment.FulfillmentView;
 import core.framework.api.json.Property;
 
 import java.util.List;
@@ -19,5 +18,5 @@ public class BOCreateOrderResponse {
     public Double totalCost;
 
     @Property(name="fulfillments")
-    public List<FulfillmentView> fulfillments;
+    public List<CompleteFulfillment> fulfillments;
 }

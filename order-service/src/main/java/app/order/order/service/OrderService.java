@@ -2,18 +2,16 @@ package app.order.order.service;
 
 import app.order.api.fulfillment.BOCreateFulfillmentRequest;
 import app.order.api.fulfillment.BOCreateFulfillmentResponse;
-import app.order.api.fulfillment.BOSearchFulfillmentRequest;
-import app.order.api.fulfillment.FulfillmentView;
 import app.order.api.order.BOCreateOrderRequest;
 import app.order.api.order.BOCreateOrderResponse;
-import app.order.api.order.BOSearchOrderAJAXRequest;
-import app.order.api.order.BOSearchOrderAJAXResponse;
 import app.order.api.order.BOSearchOrderRequest;
 import app.order.api.order.BOSearchOrderResponse;
 import app.order.api.order.BOUpdateOrderRequest;
 import app.order.api.order.BOUpdateOrderResponse;
+import app.order.api.order.CompleteFulfillment;
 import app.order.api.order.GetOrderResponse;
-import app.order.api.order.OrderView;
+import app.order.api.order.SearchOrderRequest;
+import app.order.api.order.SearchOrderResponse;
 import app.order.fulfillment.service.FulfillmentService;
 import app.order.order.domain.Order;
 import core.framework.db.Database;
@@ -55,9 +53,7 @@ public class OrderService {
                 return view(fulfillmentService.create(boCreateFulfillmentRequest));
             }).collect(Collectors.toList());
         } else {
-            BOSearchFulfillmentRequest searchRequest = new BOSearchFulfillmentRequest();
-            searchRequest.orderId = id;
-            boUpdateOrderResponse.fulfillments = fulfillmentService.search(searchRequest).fulfillments;
+            boUpdateOrderResponse.fulfillments = fulfillmentService.searchByOrderId(order.id);
         }
         boUpdateOrderResponse.id = order.id;
         boUpdateOrderResponse.address = order.address;
@@ -88,7 +84,7 @@ public class OrderService {
     public GetOrderResponse get(String id) {
         Order order = orderRepository.get(id).orElseThrow(() -> new NotFoundException("Cannot find order with id: " + id));
         GetOrderResponse getOrderResponse = new GetOrderResponse();
-        getOrderResponse.fulfillments = fulfillmentService.search(searchById(id)).fulfillments;
+        getOrderResponse.fulfillments = fulfillmentService.searchByOrderId(id);
         getOrderResponse.address = order.address;
         getOrderResponse.id = order.id;
         getOrderResponse.totalCost = order.totalCost;
@@ -123,19 +119,19 @@ public class OrderService {
             query.where("tip = ?", request.tip);
         }
         boSearchOrderResponse.orderViews = query.fetch().stream().map(order -> {
-            OrderView orderView = new OrderView();
+            BOSearchOrderResponse.Order orderView = new BOSearchOrderResponse.Order();
             orderView.address = order.address;
             orderView.id = order.id;
             orderView.totalCost = order.totalCost;
-            orderView.fulfillments = fulfillmentService.search(searchById(order.id)).fulfillments;
+            orderView.fulfillments = fulfillmentService.searchByOrderId(order.id);
             return orderView;
         }).collect(Collectors.toList());
         boSearchOrderResponse.total = boSearchOrderResponse.orderViews.size();
         return boSearchOrderResponse;
     }
 
-    public BOSearchOrderAJAXResponse search(BOSearchOrderAJAXRequest request) {
-        BOSearchOrderAJAXResponse boSearchOrderAJAXResponse = new BOSearchOrderAJAXResponse();
+    public SearchOrderResponse search(SearchOrderRequest request) {
+        SearchOrderResponse searchOrderResponse = new SearchOrderResponse();
         Query<Order> query = orderRepository.select();
         if (request.address != null) {
             query.where("address = ?", request.address);
@@ -149,30 +145,24 @@ public class OrderService {
         if (request.tip != null) {
             query.where("tip = ?", request.tip);
         }
-        boSearchOrderAJAXResponse.orderViews = query.fetch().stream().map(order -> {
-            OrderView orderView = new OrderView();
+        searchOrderResponse.orderViews = query.fetch().stream().map(order -> {
+            SearchOrderResponse.Order orderView = new SearchOrderResponse.Order();
             orderView.address = order.address;
             orderView.id = order.id;
             orderView.totalCost = order.totalCost;
-            orderView.fulfillments = fulfillmentService.search(searchById(order.id)).fulfillments;
+            orderView.fulfillments = fulfillmentService.searchByOrderId(order.id);
             return orderView;
         }).collect(Collectors.toList());
-        boSearchOrderAJAXResponse.total = boSearchOrderAJAXResponse.orderViews.size();
-        return boSearchOrderAJAXResponse;
+        searchOrderResponse.total = searchOrderResponse.orderViews.size();
+        return searchOrderResponse;
     }
 
 
-    private FulfillmentView view(BOCreateFulfillmentResponse boCreateFulfillmentResponse) {
-        FulfillmentView fulfillmentView = new FulfillmentView();
-        fulfillmentView.id = boCreateFulfillmentResponse.id;
-        fulfillmentView.items = boCreateFulfillmentResponse.items;
-        fulfillmentView.status = boCreateFulfillmentResponse.status;
-        return fulfillmentView;
-    }
-
-    private BOSearchFulfillmentRequest searchById(String id) {
-        BOSearchFulfillmentRequest searchRequest = new BOSearchFulfillmentRequest();
-        searchRequest.orderId = id;
-        return searchRequest;
+    private CompleteFulfillment view(BOCreateFulfillmentResponse boCreateFulfillmentResponse) {
+        CompleteFulfillment completeFulfillment = new CompleteFulfillment();
+        completeFulfillment.id = boCreateFulfillmentResponse.id;
+        completeFulfillment.items = boCreateFulfillmentResponse.items;
+        completeFulfillment.status = boCreateFulfillmentResponse.status;
+        return completeFulfillment;
     }
 }

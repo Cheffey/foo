@@ -19,25 +19,25 @@ import core.framework.api.web.service.ResponseStatus;
 /**
  * @author: Cheffey
  */
-public interface BOFulfillmentWebService {
+public interface BOFulfillmentAJAXWebService {
     @PUT
-    @Path("/bo/fulfillment/:id")
+    @Path("/ajax/fulfillment/:id")
     BOUpdateFulfillmentResponse update(@PathParam("id") String id, BOUpdateFulfillmentRequest request);
 
     @PUT
-    @Path("/bo/fulfillment")
+    @Path("/ajax/fulfillment")
     BOSearchFulfillmentResponse search(BOSearchFulfillmentRequest request);
 
     @POST
-    @Path("/bo/fulfillment")
+    @Path("/ajax/fulfillment")
     @ResponseStatus(HTTPStatus.CREATED)
     BOCreateFulfillmentResponse create(BOCreateFulfillmentRequest request);
 
     @GET
-    @Path("/bo/fulfillment/:id")
+    @Path("/ajax/fulfillment/:id")
     GetFulfillmentResponse get(@PathParam("id") String id);
 
     @DELETE
-    @Path("/bo/fulfillment/:id")
+    @Path("/ajax/fulfillment/:id")
     void delete(@PathParam("id") String id);
 }

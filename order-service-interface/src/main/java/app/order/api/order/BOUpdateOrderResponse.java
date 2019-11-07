@@ -1,6 +1,5 @@
 package app.order.api.order;
 
-import app.order.api.fulfillment.FulfillmentView;
 import core.framework.api.json.Property;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public class BOUpdateOrderResponse {
     public String id;
 
     @Property(name="fulfillments")
-    public List<FulfillmentView> fulfillments;
+    public List<CompleteFulfillment> fulfillments;
 
     @Property(name = "address")
     public String address;

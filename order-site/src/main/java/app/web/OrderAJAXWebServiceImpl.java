@@ -1,45 +1,39 @@
-package app.order.order.web;
+package app.web;
 
+import app.order.api.OrderAJAXWebService;
 import app.order.api.OrderWebService;
 import app.order.api.order.CancelOrderResponse;
 import app.order.api.order.CreateOrderRequest;
 import app.order.api.order.CreateOrderResponse;
 import app.order.api.order.GetOrderResponse;
-import app.order.api.order.OrderStatusResponse;
 import app.order.api.order.SearchOrderRequest;
 import app.order.api.order.SearchOrderResponse;
-import app.order.order.service.OrderService;
 import core.framework.inject.Inject;
 
 /**
- * @author: Cheffey
+ * @author Cheffey
  */
-public class OrderWebServiceImpl implements OrderWebService {
+public class OrderAJAXWebServiceImpl implements OrderAJAXWebService {
     @Inject
-    OrderService orderService;
-
-    @Override
-    public GetOrderResponse get(String id) {
-        return null;
-    }
+    OrderWebService orderWebService;
 
     @Override
     public CancelOrderResponse cancel(String id) {
-        return null;
+        return orderWebService.cancel(id);
     }
 
     @Override
     public SearchOrderResponse search(SearchOrderRequest request) {
-        return null;
+        return orderWebService.search(request);
     }
 
     @Override
     public CreateOrderResponse create(CreateOrderRequest request) {
-        return null;
+        return orderWebService.create(request);
     }
 
     @Override
-    public OrderStatusResponse getStatus(String id) {
-        return null;
+    public GetOrderResponse get(String id) {
+        return orderWebService.get(id);
     }
 }

@@ -5,5 +5,5 @@ include 'order-service-db-migration',
 //        'http-client-service',
         'order-site',
         'bo-order-site',
-        'order-service-ajax-interface',
-        'order-service-bo-ajax-interface'
+        'order-site-ajax-interface',
+        'order-site-bo-ajax-interface'
