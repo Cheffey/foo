@@ -8,8 +8,9 @@ import app.order.api.order.CreateOrderRequest;
 import app.order.api.order.CreateOrderResponse;
 import app.order.api.order.OrderView;
 import app.order.api.order.ReadOrderResponse;
+import app.order.api.order.SearchOrderBOAJAXRequest;
 import app.order.api.order.SearchOrderRequest;
-import app.order.api.order.SearchOrderResponse;
+import app.order.api.order.SearchOrderBOAJAXResponse;
 import app.order.api.order.UpdateOrderRequest;
 import app.order.api.order.UpdateOrderResponse;
 import app.order.fulfillment.service.FulfillmentService;
@@ -97,8 +98,8 @@ public class OrderService {
         orderRepository.delete(id);
     }
 
-    public SearchOrderResponse search(SearchOrderRequest request) {
-        SearchOrderResponse searchOrderResponse = new SearchOrderResponse();
+    public SearchOrderBOAJAXResponse search(SearchOrderRequest request) {
+        SearchOrderBOAJAXResponse searchOrderBOAJAXResponse = new SearchOrderBOAJAXResponse();
         Query<Order> query = orderRepository.select();
         if (request.address != null) {
             query.where("address = ?", request.address);
@@ -112,7 +113,7 @@ public class OrderService {
         if (request.tip != null) {
             query.where("tip = ?", request.tip);
         }
-        searchOrderResponse.orderViews = query.fetch().stream().map(order -> {
+        searchOrderBOAJAXResponse.orderViews = query.fetch().stream().map(order -> {
             OrderView orderView = new OrderView();
             orderView.address = order.address;
             orderView.id = order.id;
@@ -120,8 +121,8 @@ public class OrderService {
             orderView.fulfillments = fulfillmentService.search(searchById(order.id)).fulfillments;
             return orderView;
         }).collect(Collectors.toList());
-        searchOrderResponse.total = searchOrderResponse.orderViews.size();
-        return searchOrderResponse;
+        searchOrderBOAJAXResponse.total = searchOrderBOAJAXResponse.orderViews.size();
+        return searchOrderBOAJAXResponse;
     }
 
     private double checkPrice(List<String> items) {
@@ -131,6 +132,34 @@ public class OrderService {
         }
         return total;
     }
+
+    public SearchOrderBOAJAXResponse search(SearchOrderBOAJAXRequest request) {
+        SearchOrderBOAJAXResponse searchOrderBOAJAXResponse = new SearchOrderBOAJAXResponse();
+        Query<Order> query = orderRepository.select();
+        if (request.address != null) {
+            query.where("address = ?", request.address);
+        }
+        if (request.items != null) {
+            query.where("items = ?", request.items); //for further design
+        }
+        if (request.id != null) {
+            query.where("id = ?", request.id);
+        }
+        if (request.tip != null) {
+            query.where("tip = ?", request.tip);
+        }
+        searchOrderBOAJAXResponse.orderViews = query.fetch().stream().map(order -> {
+            OrderView orderView = new OrderView();
+            orderView.address = order.address;
+            orderView.id = order.id;
+            orderView.totalCost = order.totalCost;
+            orderView.fulfillments = fulfillmentService.search(searchById(order.id)).fulfillments;
+            return orderView;
+        }).collect(Collectors.toList());
+        searchOrderBOAJAXResponse.total = searchOrderBOAJAXResponse.orderViews.size();
+        return searchOrderBOAJAXResponse;
+    }
+
 
     private FulfillmentView view(CreateFulfillmentResponse createFulfillmentResponse) {
         FulfillmentView fulfillmentView = new FulfillmentView();

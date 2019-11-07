@@ -5,7 +5,7 @@ import app.order.api.order.CreateOrderRequest;
 import app.order.api.order.CreateOrderResponse;
 import app.order.api.order.ReadOrderResponse;
 import app.order.api.order.SearchOrderRequest;
-import app.order.api.order.SearchOrderResponse;
+import app.order.api.order.SearchOrderBOAJAXResponse;
 import app.order.api.order.UpdateOrderRequest;
 import app.order.api.order.UpdateOrderResponse;
 import app.order.order.service.OrderService;
@@ -24,7 +24,7 @@ public class OrderWebServiceImpl implements OrderWebService {
     }
 
     @Override
-    public SearchOrderResponse search(SearchOrderRequest request) {
+    public SearchOrderBOAJAXResponse search(SearchOrderRequest request) {
         return orderService.search(request);
     }
 

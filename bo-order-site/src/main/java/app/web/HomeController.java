@@ -1,7 +1,9 @@
-package app;
+package app.web;
 
 import app.order.api.OrderBOAJAXWebService;
 import app.order.api.OrderBOWebService;
+import app.order.api.order.SearchOrderBOAJAXRequest;
+import app.order.api.order.SearchOrderBOAJAXResponse;
 import core.framework.inject.Inject;
 import core.framework.web.Request;
 import core.framework.web.Response;
@@ -21,8 +23,9 @@ public class HomeController {
 
 
     public Response search(Request request) {
-        //orderBOAJAXWebService.search();
-        return Response.text("");
+        SearchOrderBOAJAXRequest searchOrderBOAJAXRequest = request.bean(SearchOrderBOAJAXRequest.class);
+        SearchOrderBOAJAXResponse searchOrderBOAJAXResponse = orderBOAJAXWebService.search(searchOrderBOAJAXRequest);
+        return Response.bean(searchOrderBOAJAXResponse);
     }
 
 

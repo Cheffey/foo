@@ -4,7 +4,7 @@ import app.order.api.order.CreateOrderRequest;
 import app.order.api.order.CreateOrderResponse;
 import app.order.api.order.ReadOrderResponse;
 import app.order.api.order.SearchOrderRequest;
-import app.order.api.order.SearchOrderResponse;
+import app.order.api.order.SearchOrderBOAJAXResponse;
 import app.order.api.order.UpdateOrderRequest;
 import app.order.api.order.UpdateOrderResponse;
 import core.framework.api.http.HTTPStatus;
@@ -26,7 +26,7 @@ public interface OrderWebService {
 
     @PUT
     @Path("/order")
-    SearchOrderResponse search(SearchOrderRequest request);
+    SearchOrderBOAJAXResponse search(SearchOrderRequest request);
 
     @POST
     @Path("/order")

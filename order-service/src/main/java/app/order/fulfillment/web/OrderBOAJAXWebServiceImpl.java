@@ -8,11 +8,16 @@ import app.order.api.order.SearchOrderBOAJAXRequest;
 import app.order.api.order.SearchOrderBOAJAXResponse;
 import app.order.api.order.UpdateOrderBOAJAXRequest;
 import app.order.api.order.UpdateOrderBOAJAXResponse;
+import app.order.order.service.OrderService;
+import core.framework.inject.Inject;
 
 /**
  * @author Cheffey
  */
 public class OrderBOAJAXWebServiceImpl implements OrderBOAJAXWebService {
+    @Inject
+    OrderService orderService;
+
     @Override
     public UpdateOrderBOAJAXResponse cancel(String id, UpdateOrderBOAJAXRequest request) {
         return null;
@@ -20,7 +25,7 @@ public class OrderBOAJAXWebServiceImpl implements OrderBOAJAXWebService {
 
     @Override
     public SearchOrderBOAJAXResponse search(SearchOrderBOAJAXRequest request) {
-        return null;
+        return orderService.search(request);
     }
 
     @Override

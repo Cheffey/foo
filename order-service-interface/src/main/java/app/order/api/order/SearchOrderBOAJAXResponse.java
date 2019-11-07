@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author: Cheffey
  */
-public class SearchOrderResponse {
+public class SearchOrderBOAJAXResponse {
     @Property(name = "total")
     public Integer total;
 
