@@ -1,13 +1,12 @@
-package app.fulfillment.api.ajax;
+package app.order.api.fulfillment;
 
 import core.framework.api.json.Property;
-
 import java.util.List;
 
 /**
  * @author: Cheffey
  */
-public class UpdateFulfillmentAJAXResponse {
+public class CreateFulfillmentAJAXResponse {
     @Property(name = "id")
     public String id;
 

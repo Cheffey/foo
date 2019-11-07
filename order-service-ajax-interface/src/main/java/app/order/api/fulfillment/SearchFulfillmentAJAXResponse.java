@@ -1,4 +1,4 @@
-package app.fulfillment.api.ajax;
+package app.order.api.fulfillment;
 
 import core.framework.api.json.Property;
 

@@ -1,7 +1,8 @@
 package app;
 
+import app.order.api.OrderBOAJAXWebService;
+import app.order.api.OrderBOWebService;
 import core.framework.module.App;
-import core.framework.module.SystemModule;
 
 /**
  * @author Cheffey
@@ -12,8 +13,8 @@ public class BOWebsiteApp extends App {
     protected void initialize() {
         http().httpPort(8080);
         http().httpsPort(8443);
-        load(new SystemModule("sys.properties"));
-        load(new FulfillmentModule());
-        load(new OrderModule());
+        api().client(OrderBOWebService.class, "http://localhost:4080/");
+        api().client(OrderBOAJAXWebService.class, "http://localhost:4080/");
+        load(new WebModule());
     }
 }

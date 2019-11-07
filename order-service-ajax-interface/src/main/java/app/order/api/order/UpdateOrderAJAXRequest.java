@@ -1,4 +1,4 @@
-package app.order.api.ajax;
+package app.order.api.order;
 
 import core.framework.api.json.Property;
 import core.framework.api.validate.Min;

@@ -1,4 +1,4 @@
-package app.order.api.ajax;
+package app.order.api.order;
 
 /**
  * @author Cheffey

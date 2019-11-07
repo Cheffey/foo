@@ -1,6 +1,6 @@
-package app.order.api.ajax;
+package app.order.api.order;
 
-import app.fulfillment.api.ajax.FulfillmentView;
+import app.order.api.fulfillment.FulfillmentView;
 import core.framework.api.json.Property;
 
 import java.util.List;

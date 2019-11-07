@@ -1,6 +1,5 @@
 package app;
 
-import app.order.web.HomeController;
 import core.framework.module.Module;
 
 import static core.framework.http.HTTPMethod.GET;
@@ -14,6 +13,6 @@ public class WebModule extends Module {
     protected void initialize() {
         HomeController home = bind(HomeController.class);
         http().route(POST, "/", home::search);
-        http().route(GET, "/", home::index);
+        http().route(GET, "/:id", home::get);
     }
 }

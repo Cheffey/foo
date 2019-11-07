@@ -1,16 +1,19 @@
-package app.fulfillment.api.ajax;
+package app.order.api.fulfillment;
 
 import core.framework.api.json.Property;
 
 import java.util.List;
 
-public class FulfillmentView {
+/**
+ * @author: Cheffey
+ */
+public class UpdateFulfillmentAJAXResponse {
     @Property(name = "id")
     public String id;
 
-    @Property(name = "items")
+    @Property(name="items")
     public List<String> items;
 
-    @Property(name = "status")
+    @Property(name="status")
     public String status;
 }
