@@ -1,6 +1,7 @@
 package app;
 
-import app.order.api.OrderBOAJAXWebService;
+import app.order.api.BOOrderAJAXWebService;
+import app.order.api.BOOrderWebService;
 import core.framework.module.Module;
 
 /**
@@ -9,6 +10,7 @@ import core.framework.module.Module;
 public class OrderModule extends Module {
     @Override
     protected void initialize() {
-        bind(OrderBOAJAXWebService.class);
+        api().client(BOOrderWebService.class, requiredProperty("app.order.service.URL"));
+        api().client(BOOrderAJAXWebService.class, requiredProperty("app.order.service.URL"));
     }
 }

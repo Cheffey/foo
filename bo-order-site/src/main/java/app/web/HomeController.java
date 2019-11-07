@@ -1,9 +1,9 @@
 package app.web;
 
-import app.order.api.OrderBOAJAXWebService;
-import app.order.api.OrderBOWebService;
-import app.order.api.order.SearchOrderBOAJAXRequest;
-import app.order.api.order.SearchOrderBOAJAXResponse;
+import app.order.api.BOOrderAJAXWebService;
+import app.order.api.BOOrderWebService;
+import app.order.api.order.BOSearchOrderAJAXRequest;
+import app.order.api.order.BOSearchOrderAJAXResponse;
 import core.framework.inject.Inject;
 import core.framework.web.Request;
 import core.framework.web.Response;
@@ -13,9 +13,9 @@ import core.framework.web.Response;
  */
 public class HomeController {
     @Inject
-    OrderBOWebService orderBOWebService;
+    BOOrderWebService boOrderWebService;
     @Inject
-    OrderBOAJAXWebService orderBOAJAXWebService;
+    BOOrderAJAXWebService boOrderAJAXWebService;
 
     public Response cancel(String id, Request request) {
         return null;
@@ -23,9 +23,9 @@ public class HomeController {
 
 
     public Response search(Request request) {
-        SearchOrderBOAJAXRequest searchOrderBOAJAXRequest = request.bean(SearchOrderBOAJAXRequest.class);
-        SearchOrderBOAJAXResponse searchOrderBOAJAXResponse = orderBOAJAXWebService.search(searchOrderBOAJAXRequest);
-        return Response.bean(searchOrderBOAJAXResponse);
+        BOSearchOrderAJAXRequest boSearchOrderAJAXRequest = request.bean(BOSearchOrderAJAXRequest.class);
+        BOSearchOrderAJAXResponse boSearchOrderAJAXResponse = boOrderAJAXWebService.search(boSearchOrderAJAXRequest);
+        return Response.bean(boSearchOrderAJAXResponse);
     }
 
 

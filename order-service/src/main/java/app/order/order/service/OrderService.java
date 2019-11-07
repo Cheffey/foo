@@ -1,18 +1,19 @@
 package app.order.order.service;
 
-import app.order.api.fulfillment.CreateFulfillmentRequest;
-import app.order.api.fulfillment.CreateFulfillmentResponse;
+import app.order.api.fulfillment.BOCreateFulfillmentRequest;
+import app.order.api.fulfillment.BOCreateFulfillmentResponse;
+import app.order.api.fulfillment.BOSearchFulfillmentRequest;
 import app.order.api.fulfillment.FulfillmentView;
-import app.order.api.fulfillment.SearchFulfillmentRequest;
-import app.order.api.order.CreateOrderRequest;
-import app.order.api.order.CreateOrderResponse;
+import app.order.api.order.BOCreateOrderRequest;
+import app.order.api.order.BOCreateOrderResponse;
+import app.order.api.order.BOSearchOrderAJAXRequest;
+import app.order.api.order.BOSearchOrderAJAXResponse;
+import app.order.api.order.BOSearchOrderRequest;
+import app.order.api.order.BOSearchOrderResponse;
+import app.order.api.order.BOUpdateOrderRequest;
+import app.order.api.order.BOUpdateOrderResponse;
+import app.order.api.order.GetOrderResponse;
 import app.order.api.order.OrderView;
-import app.order.api.order.ReadOrderResponse;
-import app.order.api.order.SearchOrderBOAJAXRequest;
-import app.order.api.order.SearchOrderRequest;
-import app.order.api.order.SearchOrderBOAJAXResponse;
-import app.order.api.order.UpdateOrderRequest;
-import app.order.api.order.UpdateOrderResponse;
 import app.order.fulfillment.service.FulfillmentService;
 import app.order.order.domain.Order;
 import core.framework.db.Database;
@@ -37,8 +38,8 @@ public class OrderService {
     Database database;
 
 
-    public UpdateOrderResponse update(String id, UpdateOrderRequest request) {
-        UpdateOrderResponse updateOrderResponse = new UpdateOrderResponse();
+    public BOUpdateOrderResponse update(String id, BOUpdateOrderRequest request) {
+        BOUpdateOrderResponse boUpdateOrderResponse = new BOUpdateOrderResponse();
         Order order = orderRepository.get(id).orElseThrow(() -> new NotFoundException("Cannot find order, id=" + id));
         order.address = request.address;
         order.totalCost = request.total;
@@ -47,59 +48,59 @@ public class OrderService {
             transaction.commit();
         }
         if (request.items != null) {
-            updateOrderResponse.fulfillments = request.items.stream().map(item -> {
-                CreateFulfillmentRequest createFulfillmentRequest = new CreateFulfillmentRequest();
-                createFulfillmentRequest.items = List.of(item);
-                createFulfillmentRequest.orderId = order.id;
-                return view(fulfillmentService.create(createFulfillmentRequest));
+            boUpdateOrderResponse.fulfillments = request.items.stream().map(item -> {
+                BOCreateFulfillmentRequest boCreateFulfillmentRequest = new BOCreateFulfillmentRequest();
+                boCreateFulfillmentRequest.items = List.of(item);
+                boCreateFulfillmentRequest.orderId = order.id;
+                return view(fulfillmentService.create(boCreateFulfillmentRequest));
             }).collect(Collectors.toList());
         } else {
-            SearchFulfillmentRequest searchRequest = new SearchFulfillmentRequest();
+            BOSearchFulfillmentRequest searchRequest = new BOSearchFulfillmentRequest();
             searchRequest.orderId = id;
-            updateOrderResponse.fulfillments = fulfillmentService.search(searchRequest).fulfillments;
+            boUpdateOrderResponse.fulfillments = fulfillmentService.search(searchRequest).fulfillments;
         }
-        updateOrderResponse.id = order.id;
-        updateOrderResponse.address = order.address;
-        updateOrderResponse.totalCost = order.totalCost;
-        return updateOrderResponse;
+        boUpdateOrderResponse.id = order.id;
+        boUpdateOrderResponse.address = order.address;
+        boUpdateOrderResponse.totalCost = order.totalCost;
+        return boUpdateOrderResponse;
     }
 
 
-    public CreateOrderResponse create(CreateOrderRequest request) {
-        CreateOrderResponse createOrderResponse = new CreateOrderResponse();
+    public BOCreateOrderResponse create(BOCreateOrderRequest request) {
+        BOCreateOrderResponse BOCreateOrderResponse = new BOCreateOrderResponse();
         Order order = new Order();
         order.id = UUID.randomUUID().toString();
         order.address = request.address;
         order.totalCost = checkPrice(request.items) + request.tip;
         orderRepository.insert(order);
-        createOrderResponse.fulfillments = request.items.stream().map(item -> {
-            CreateFulfillmentRequest createFulfillmentRequest = new CreateFulfillmentRequest();
-            createFulfillmentRequest.items = List.of(item);
-            createFulfillmentRequest.orderId = order.id;
-            return view(fulfillmentService.create(createFulfillmentRequest));
+        BOCreateOrderResponse.fulfillments = request.items.stream().map(item -> {
+            BOCreateFulfillmentRequest boCreateFulfillmentRequest = new BOCreateFulfillmentRequest();
+            boCreateFulfillmentRequest.items = List.of(item);
+            boCreateFulfillmentRequest.orderId = order.id;
+            return view(fulfillmentService.create(boCreateFulfillmentRequest));
         }).collect(Collectors.toList());
-        createOrderResponse.id = order.id;
-        createOrderResponse.address = order.address;
-        createOrderResponse.totalCost = order.totalCost;
-        return createOrderResponse;
+        BOCreateOrderResponse.id = order.id;
+        BOCreateOrderResponse.address = order.address;
+        BOCreateOrderResponse.totalCost = order.totalCost;
+        return BOCreateOrderResponse;
     }
 
-    public ReadOrderResponse get(String id) {
+    public GetOrderResponse get(String id) {
         Order order = orderRepository.get(id).orElseThrow(() -> new NotFoundException("Cannot find order with id: " + id));
-        ReadOrderResponse readOrderResponse = new ReadOrderResponse();
-        readOrderResponse.fulfillments = fulfillmentService.search(searchById(id)).fulfillments;
-        readOrderResponse.address = order.address;
-        readOrderResponse.id = order.id;
-        readOrderResponse.totalCost = order.totalCost;
-        return readOrderResponse;
+        GetOrderResponse getOrderResponse = new GetOrderResponse();
+        getOrderResponse.fulfillments = fulfillmentService.search(searchById(id)).fulfillments;
+        getOrderResponse.address = order.address;
+        getOrderResponse.id = order.id;
+        getOrderResponse.totalCost = order.totalCost;
+        return getOrderResponse;
     }
 
     public void delete(String id) {
         orderRepository.delete(id);
     }
 
-    public SearchOrderBOAJAXResponse search(SearchOrderRequest request) {
-        SearchOrderBOAJAXResponse searchOrderBOAJAXResponse = new SearchOrderBOAJAXResponse();
+    public BOSearchOrderResponse search(BOSearchOrderRequest request) {
+        BOSearchOrderResponse BOsearchOrderResponse = new BOSearchOrderResponse();
         Query<Order> query = orderRepository.select();
         if (request.address != null) {
             query.where("address = ?", request.address);
@@ -113,7 +114,7 @@ public class OrderService {
         if (request.tip != null) {
             query.where("tip = ?", request.tip);
         }
-        searchOrderBOAJAXResponse.orderViews = query.fetch().stream().map(order -> {
+        BOsearchOrderResponse.orderViews = query.fetch().stream().map(order -> {
             OrderView orderView = new OrderView();
             orderView.address = order.address;
             orderView.id = order.id;
@@ -121,8 +122,8 @@ public class OrderService {
             orderView.fulfillments = fulfillmentService.search(searchById(order.id)).fulfillments;
             return orderView;
         }).collect(Collectors.toList());
-        searchOrderBOAJAXResponse.total = searchOrderBOAJAXResponse.orderViews.size();
-        return searchOrderBOAJAXResponse;
+        BOsearchOrderResponse.total = BOsearchOrderResponse.orderViews.size();
+        return BOsearchOrderResponse;
     }
 
     private double checkPrice(List<String> items) {
@@ -133,8 +134,8 @@ public class OrderService {
         return total;
     }
 
-    public SearchOrderBOAJAXResponse search(SearchOrderBOAJAXRequest request) {
-        SearchOrderBOAJAXResponse searchOrderBOAJAXResponse = new SearchOrderBOAJAXResponse();
+    public BOSearchOrderAJAXResponse search(BOSearchOrderAJAXRequest request) {
+        BOSearchOrderAJAXResponse BOsearchOrderAJAXResponse = new BOSearchOrderAJAXResponse();
         Query<Order> query = orderRepository.select();
         if (request.address != null) {
             query.where("address = ?", request.address);
@@ -148,7 +149,7 @@ public class OrderService {
         if (request.tip != null) {
             query.where("tip = ?", request.tip);
         }
-        searchOrderBOAJAXResponse.orderViews = query.fetch().stream().map(order -> {
+        BOsearchOrderAJAXResponse.orderViews = query.fetch().stream().map(order -> {
             OrderView orderView = new OrderView();
             orderView.address = order.address;
             orderView.id = order.id;
@@ -156,21 +157,21 @@ public class OrderService {
             orderView.fulfillments = fulfillmentService.search(searchById(order.id)).fulfillments;
             return orderView;
         }).collect(Collectors.toList());
-        searchOrderBOAJAXResponse.total = searchOrderBOAJAXResponse.orderViews.size();
-        return searchOrderBOAJAXResponse;
+        BOsearchOrderAJAXResponse.total = BOsearchOrderAJAXResponse.orderViews.size();
+        return BOsearchOrderAJAXResponse;
     }
 
 
-    private FulfillmentView view(CreateFulfillmentResponse createFulfillmentResponse) {
+    private FulfillmentView view(BOCreateFulfillmentResponse BOCreateFulfillmentResponse) {
         FulfillmentView fulfillmentView = new FulfillmentView();
-        fulfillmentView.id = createFulfillmentResponse.id;
-        fulfillmentView.items = createFulfillmentResponse.items;
-        fulfillmentView.status = createFulfillmentResponse.status;
+        fulfillmentView.id = BOCreateFulfillmentResponse.id;
+        fulfillmentView.items = BOCreateFulfillmentResponse.items;
+        fulfillmentView.status = BOCreateFulfillmentResponse.status;
         return fulfillmentView;
     }
 
-    private SearchFulfillmentRequest searchById(String id) {
-        SearchFulfillmentRequest searchRequest = new SearchFulfillmentRequest();
+    private BOSearchFulfillmentRequest searchById(String id) {
+        BOSearchFulfillmentRequest searchRequest = new BOSearchFulfillmentRequest();
         searchRequest.orderId = id;
         return searchRequest;
     }

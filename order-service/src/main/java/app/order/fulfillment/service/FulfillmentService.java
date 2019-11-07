@@ -1,13 +1,13 @@
 package app.order.fulfillment.service;
 
-import app.order.api.fulfillment.CreateFulfillmentRequest;
-import app.order.api.fulfillment.CreateFulfillmentResponse;
+import app.order.api.fulfillment.BOCreateFulfillmentRequest;
+import app.order.api.fulfillment.BOCreateFulfillmentResponse;
 import app.order.api.fulfillment.FulfillmentView;
-import app.order.api.fulfillment.ReadFulfillmentResponse;
-import app.order.api.fulfillment.SearchFulfillmentRequest;
-import app.order.api.fulfillment.SearchFulfillmentResponse;
-import app.order.api.fulfillment.UpdateFulfillmentRequest;
-import app.order.api.fulfillment.UpdateFulfillmentResponse;
+import app.order.api.fulfillment.GetFulfillmentResponse;
+import app.order.api.fulfillment.BOSearchFulfillmentRequest;
+import app.order.api.fulfillment.BOSearchFulfillmentResponse;
+import app.order.api.fulfillment.BOUpdateFulfillmentRequest;
+import app.order.api.fulfillment.BOUpdateFulfillmentResponse;
 import app.order.fulfillment.domain.Fulfillment;
 import app.order.fulfillment.domain.Status;
 import com.mongodb.client.model.Updates;
@@ -28,7 +28,7 @@ public class FulfillmentService {
     @Inject
     MongoCollection<Fulfillment> fulfillmentCollection;
 
-    public UpdateFulfillmentResponse update(String id, UpdateFulfillmentRequest request) {
+    public BOUpdateFulfillmentResponse update(String id, BOUpdateFulfillmentRequest request) {
         fulfillmentCollection.get(id).orElseThrow(() -> new NotFoundException("can't get fulfillment with id: " + id));
         List<Bson> updates = new ArrayList<>();
         if (request.orderId != null) {
@@ -43,43 +43,43 @@ public class FulfillmentService {
         if (!updates.isEmpty()) {
             fulfillmentCollection.update(eq("_id", id), Updates.combine(updates));
         }
-        UpdateFulfillmentResponse updateFulfillmentResponse = new UpdateFulfillmentResponse();
-        updateFulfillmentResponse.items = request.items;
-        updateFulfillmentResponse.status = request.status;
-        return updateFulfillmentResponse;
+        BOUpdateFulfillmentResponse boUpdateFulfillmentResponse = new BOUpdateFulfillmentResponse();
+        boUpdateFulfillmentResponse.items = request.items;
+        boUpdateFulfillmentResponse.status = request.status;
+        return boUpdateFulfillmentResponse;
     }
 
-    public CreateFulfillmentResponse create(CreateFulfillmentRequest request) {
+    public BOCreateFulfillmentResponse create(BOCreateFulfillmentRequest request) {
         Fulfillment fulfillment = new Fulfillment();
         fulfillment.orderId = request.orderId;
         fulfillment.id = UUID.randomUUID().toString();
         fulfillment.items = request.items;
         fulfillment.status = Status.valueOf("PENDING");
         fulfillmentCollection.insert(fulfillment);
-        CreateFulfillmentResponse createFulfillmentResponse = new CreateFulfillmentResponse();
+        BOCreateFulfillmentResponse boCreateFulfillmentResponse = new BOCreateFulfillmentResponse();
         //orderId won't show in response
-        createFulfillmentResponse.id = fulfillment.id;
-        createFulfillmentResponse.items = request.items;
-        createFulfillmentResponse.status = "PENDING";
-        return createFulfillmentResponse;
+        boCreateFulfillmentResponse.id = fulfillment.id;
+        boCreateFulfillmentResponse.items = request.items;
+        boCreateFulfillmentResponse.status = "PENDING";
+        return boCreateFulfillmentResponse;
     }
 
-    public ReadFulfillmentResponse get(String id) {
+    public GetFulfillmentResponse get(String id) {
         Fulfillment fulfillment = fulfillmentCollection.get(id).orElseThrow(() -> new NotFoundException("can't get fulfillment with id: " + id));
-        ReadFulfillmentResponse readFulfillmentResponse = new ReadFulfillmentResponse();
+        GetFulfillmentResponse getFulfillmentResponse = new GetFulfillmentResponse();
         //orderId won't show in response
-        readFulfillmentResponse.id = fulfillment.id;
-        readFulfillmentResponse.items = fulfillment.items;
-        readFulfillmentResponse.status = fulfillment.status.toString();
-        return readFulfillmentResponse;
+        getFulfillmentResponse.id = fulfillment.id;
+        getFulfillmentResponse.items = fulfillment.items;
+        getFulfillmentResponse.status = fulfillment.status.toString();
+        return getFulfillmentResponse;
     }
 
     public void delete(String id) {
         fulfillmentCollection.delete(id);
     }
 
-    public SearchFulfillmentResponse search(SearchFulfillmentRequest request) {
-        SearchFulfillmentResponse searchFulfillmentResponse = new SearchFulfillmentResponse();
+    public BOSearchFulfillmentResponse search(BOSearchFulfillmentRequest request) {
+        BOSearchFulfillmentResponse boSearchFulfillmentResponse = new BOSearchFulfillmentResponse();
         List<Bson> filters = new ArrayList<>();
         //filters.add(eq("_id", request.id));
         if (request.orderId != null) {
@@ -91,7 +91,7 @@ public class FulfillmentService {
         if (request.status != null) {
             filters.add(eq("status", request.status));
         }
-        searchFulfillmentResponse.fulfillments = fulfillmentCollection.find(and(filters))
+        boSearchFulfillmentResponse.fulfillments = fulfillmentCollection.find(and(filters))
                 .stream().map(fulfillment -> {
                     FulfillmentView fulfillmentView = new FulfillmentView();
                     fulfillmentView.id = fulfillment.id;
@@ -99,11 +99,11 @@ public class FulfillmentService {
                     fulfillmentView.items = fulfillment.items;
                     return fulfillmentView;
                 }).collect(Collectors.toList());
-        searchFulfillmentResponse.total = searchFulfillmentResponse.fulfillments.size();
-        return searchFulfillmentResponse;
+        boSearchFulfillmentResponse.total = boSearchFulfillmentResponse.fulfillments.size();
+        return boSearchFulfillmentResponse;
     }
 
-    public UpdateFulfillmentResponse cancel(UpdateFulfillmentRequest request) {
-        return new UpdateFulfillmentResponse();
+    public BOUpdateFulfillmentResponse cancel(BOUpdateFulfillmentRequest request) {
+        return new BOUpdateFulfillmentResponse();
     }
 }

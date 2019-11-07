@@ -1,7 +1,7 @@
 package app.order.service;
 
-import app.order.api.OrderWebService;
-import app.order.api.order.CreateOrderRequest;
+import app.order.api.BOOrderWebService;
+import app.order.api.order.BOCreateOrderRequest;
 import core.framework.inject.Inject;
 
 /**
@@ -9,9 +9,9 @@ import core.framework.inject.Inject;
  */
 public class Test {
     @Inject
-    OrderWebService orderWebService;
+    BOOrderWebService BOOrderWebService;
 
     public void test() {
-        orderWebService.create(new CreateOrderRequest());
+        BOOrderWebService.create(new BOCreateOrderRequest());
     }
 }
