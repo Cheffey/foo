@@ -1,6 +1,8 @@
 package app.web;
 
-import app.service.OrderService;
+import app.order.api.OrderAJAXWebService;
+import app.order.api.OrderWebService;
+import app.order.api.order.GetOrderResponse;
 import core.framework.inject.Inject;
 import core.framework.web.Request;
 import core.framework.web.Response;
@@ -10,7 +12,9 @@ import core.framework.web.Response;
  */
 public class HomeController {
     @Inject
-    OrderService orderService;
+    OrderWebService OrderWebService;
+    @Inject
+    OrderAJAXWebService OrderAJAXWebService;
 
     public Response cancel(String id, Request request) {
         return null;
@@ -18,7 +22,7 @@ public class HomeController {
 
 
     public Response search(Request request) {
-        return orderService.search(request);
+        return null;
     }
 
 
@@ -28,6 +32,8 @@ public class HomeController {
 
 
     public Response get(Request request) {
-        return null;
+        String id = request.pathParam("id");
+        GetOrderResponse boSearchOrderAJAXResponse = OrderWebService.get(id);
+        return Response.bean(boSearchOrderAJAXResponse);
     }
 }

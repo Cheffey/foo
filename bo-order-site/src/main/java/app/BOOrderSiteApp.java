@@ -1,5 +1,6 @@
 package app;
 
+import app.service.OrderService;
 import core.framework.module.App;
 import core.framework.module.SystemModule;
 
@@ -14,6 +15,7 @@ public class BOOrderSiteApp extends App {
         load(new SystemModule("sys.properties"));
         load(new FulfillmentModule());
         load(new OrderModule());
+        bind(OrderService.class);
         load(new WebModule());
     }
 }
