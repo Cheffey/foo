@@ -97,7 +97,7 @@ public class FulfillmentService {
                 fulfillment.status = flmnt.status.toString();
 //                    fulfillment.items = flmnt.items;
                 return fulfillment;
-                }).collect(Collectors.toList());
+            }).collect(Collectors.toList());
         boSearchFulfillmentResponse.total = boSearchFulfillmentResponse.fulfillments.size();
         return boSearchFulfillmentResponse;
     }
