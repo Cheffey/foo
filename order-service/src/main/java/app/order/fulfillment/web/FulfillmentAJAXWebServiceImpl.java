@@ -1,5 +1,4 @@
-package app.fulfillment.service;
-
+package app.order.fulfillment.web;
 
 import app.order.api.FulfillmentAJAXWebService;
 import app.order.api.fulfillment.CreateFulfillmentAJAXRequest;
