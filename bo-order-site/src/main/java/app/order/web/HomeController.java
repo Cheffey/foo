@@ -1,6 +1,6 @@
-package app.web;
+package app.order.web;
 
-import app.service.OrderService;
+import app.order.service.OrderService;
 import core.framework.inject.Inject;
 import core.framework.web.Request;
 import core.framework.web.Response;

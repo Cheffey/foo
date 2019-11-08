@@ -2,7 +2,7 @@ package app;
 
 import app.order.api.FulfillmentAJAXWebService;
 import app.order.api.FulfillmentWebService;
-import app.web.FulfillmentAJAXWebServiceImpl;
+import app.order.web.FulfillmentAJAXWebServiceImpl;
 import core.framework.module.Module;
 
 /**

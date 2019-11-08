@@ -1,4 +1,4 @@
-package app.web;
+package app.order.web;
 
 import app.order.api.BOOrderAJAXWebService;
 import app.order.api.order.BOCreateOrderRequest;

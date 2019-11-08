@@ -1,4 +1,4 @@
-package app.web;
+package app.order.web;
 
 import app.order.api.FulfillmentAJAXWebService;
 import app.order.api.FulfillmentWebService;

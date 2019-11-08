@@ -1,4 +1,4 @@
-package app.service;
+package app.order.service;
 
 import app.order.api.BOOrderAJAXWebService;
 import app.order.api.BOOrderWebService;

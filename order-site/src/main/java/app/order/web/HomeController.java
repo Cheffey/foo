@@ -1,4 +1,4 @@
-package app.web;
+package app.order.web;
 
 import app.order.api.OrderWebService;
 import app.order.api.order.GetOrderResponse;

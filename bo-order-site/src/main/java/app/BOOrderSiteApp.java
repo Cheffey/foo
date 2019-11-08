@@ -1,6 +1,6 @@
 package app;
 
-import app.service.OrderService;
+import app.order.service.OrderService;
 import core.framework.module.App;
 import core.framework.module.SystemModule;
 
