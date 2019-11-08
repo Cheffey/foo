@@ -1,12 +1,5 @@
-package app.order.api;
+package app.order.api.order;
 
-import app.order.api.order.BOCreateOrderRequest;
-import app.order.api.order.BOCreateOrderResponse;
-import app.order.api.order.BOSearchOrderRequest;
-import app.order.api.order.BOSearchOrderResponse;
-import app.order.api.order.BOUpdateOrderRequest;
-import app.order.api.order.BOUpdateOrderResponse;
-import app.order.api.order.GetOrderResponse;
 import core.framework.api.http.HTTPStatus;
 import core.framework.api.web.service.DELETE;
 import core.framework.api.web.service.GET;
@@ -22,20 +15,20 @@ import core.framework.api.web.service.ResponseStatus;
 public interface BOOrderAJAXWebService {
     @PUT
     @Path("/ajax/order/:id")
-    BOUpdateOrderResponse update(@PathParam("id") String id, BOUpdateOrderRequest request);
+    BOUpdateOrderAJAXResponse update(@PathParam("id") String id, BOUpdateOrderAJAXRequest request);
 
     @PUT
     @Path("/ajax/order")
-    BOSearchOrderResponse search(BOSearchOrderRequest request);
+    BOSearchOrderAJAXResponse search(BOSearchOrderAJAXRequest request);
 
     @POST
     @Path("/ajax/order")
     @ResponseStatus(HTTPStatus.CREATED)
-    BOCreateOrderResponse create(BOCreateOrderRequest request);
+    BOCreateOrderAJAXResponse create(BOCreateOrderAJAXRequest request);
 
     @GET
     @Path("/ajax/order/:id")
-    GetOrderResponse get(@PathParam("id") String id);
+    BOGetOrderAJAXResponse get(@PathParam("id") String id);
 
     @DELETE
     @Path("/ajax/order/:id")

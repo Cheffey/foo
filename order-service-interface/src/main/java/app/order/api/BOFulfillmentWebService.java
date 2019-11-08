@@ -2,11 +2,11 @@ package app.order.api;
 
 import app.order.api.fulfillment.BOCreateFulfillmentRequest;
 import app.order.api.fulfillment.BOCreateFulfillmentResponse;
+import app.order.api.fulfillment.BOGetFulfillmentResponse;
 import app.order.api.fulfillment.BOSearchFulfillmentRequest;
 import app.order.api.fulfillment.BOSearchFulfillmentResponse;
 import app.order.api.fulfillment.BOUpdateFulfillmentRequest;
 import app.order.api.fulfillment.BOUpdateFulfillmentResponse;
-import app.order.api.fulfillment.GetFulfillmentResponse;
 import core.framework.api.http.HTTPStatus;
 import core.framework.api.web.service.DELETE;
 import core.framework.api.web.service.GET;
@@ -35,7 +35,7 @@ public interface BOFulfillmentWebService {
 
     @GET
     @Path("/bo/fulfillment/:id")
-    GetFulfillmentResponse get(@PathParam("id") String id);
+    BOGetFulfillmentResponse get(@PathParam("id") String id);
 
     @DELETE
     @Path("/bo/fulfillment/:id")

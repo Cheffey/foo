@@ -3,7 +3,7 @@ package app.order.fulfillment.web;
 import app.order.api.BOFulfillmentWebService;
 import app.order.api.fulfillment.BOCreateFulfillmentRequest;
 import app.order.api.fulfillment.BOCreateFulfillmentResponse;
-import app.order.api.fulfillment.GetFulfillmentResponse;
+import app.order.api.fulfillment.BOGetFulfillmentResponse;
 import app.order.api.fulfillment.BOSearchFulfillmentRequest;
 import app.order.api.fulfillment.BOSearchFulfillmentResponse;
 import app.order.api.fulfillment.BOUpdateFulfillmentRequest;
@@ -34,7 +34,7 @@ public class BOFulfillmentWebServiceImpl implements BOFulfillmentWebService {
     }
 
     @Override
-    public GetFulfillmentResponse get(String id) {
+    public BOGetFulfillmentResponse get(String id) {
         return fulfillmentService.get(id);
     }
 

@@ -20,7 +20,7 @@ public class FulfillmentWebServiceImpl implements FulfillmentWebService {
 
     @Override
     public GetFulfillmentResponse get(String id) {
-        return fulfillmentService.get(id);
+        return null;
     }
 
     @Override

@@ -1,35 +1,35 @@
 package app.order.web;
 
-import app.order.api.BOOrderAJAXWebService;
-import app.order.api.order.BOCreateOrderRequest;
-import app.order.api.order.BOCreateOrderResponse;
-import app.order.api.order.BOSearchOrderRequest;
-import app.order.api.order.BOSearchOrderResponse;
-import app.order.api.order.BOUpdateOrderRequest;
-import app.order.api.order.BOUpdateOrderResponse;
-import app.order.api.order.GetOrderResponse;
+import app.order.api.order.BOCreateOrderAJAXRequest;
+import app.order.api.order.BOCreateOrderAJAXResponse;
+import app.order.api.order.BOGetOrderAJAXResponse;
+import app.order.api.order.BOOrderAJAXWebService;
+import app.order.api.order.BOSearchOrderAJAXRequest;
+import app.order.api.order.BOSearchOrderAJAXResponse;
+import app.order.api.order.BOUpdateOrderAJAXRequest;
+import app.order.api.order.BOUpdateOrderAJAXResponse;
 
 /**
  * @author Cheffey
  */
 public class BOOrderAJAXWebServiceImpl implements BOOrderAJAXWebService {
     @Override
-    public BOUpdateOrderResponse update(String id, BOUpdateOrderRequest request) {
+    public BOUpdateOrderAJAXResponse update(String id, BOUpdateOrderAJAXRequest request) {
         return null;
     }
 
     @Override
-    public BOSearchOrderResponse search(BOSearchOrderRequest request) {
+    public BOSearchOrderAJAXResponse search(BOSearchOrderAJAXRequest request) {
         return null;
     }
 
     @Override
-    public BOCreateOrderResponse create(BOCreateOrderRequest request) {
+    public BOCreateOrderAJAXResponse create(BOCreateOrderAJAXRequest request) {
         return null;
     }
 
     @Override
-    public GetOrderResponse get(String id) {
+    public BOGetOrderAJAXResponse get(String id) {
         return null;
     }
 

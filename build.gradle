@@ -52,24 +52,24 @@ project(':order-service') {
 project(':bo-order-site') {
     dependencies {
         implementation project(':order-service-interface')
-        implementation project(':bo-order-site-ajax-interface')
+        implementation project(':bo-order-site-interface')
     }
 }
 
 project(':order-site') {
     dependencies {
         implementation project(':order-service-interface')
-        implementation project(':order-site-ajax-interface')
+        implementation project(':order-site-interface')
     }
 }
 
-project(':order-site-ajax-interface') {
+project(':order-site-interface') {
     dependencies {
         implementation project(':order-service-interface')
     }
 }
 
-project(':bo-order-site-ajax-interface') {
+project(':bo-order-site-interface') {
     dependencies {
         implementation project(':order-service-interface')
     }

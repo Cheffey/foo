@@ -1,9 +1,9 @@
 package app.order.service;
 
-import app.order.api.BOOrderAJAXWebService;
+import app.order.api.order.BOOrderAJAXWebService;
 import app.order.api.BOOrderWebService;
-import app.order.api.order.BOSearchOrderRequest;
-import app.order.api.order.BOSearchOrderResponse;
+import app.order.api.order.BOSearchOrderAJAXRequest;
+import app.order.api.order.BOSearchOrderAJAXResponse;
 import core.framework.inject.Inject;
 import core.framework.web.Request;
 import core.framework.web.Response;
@@ -18,8 +18,8 @@ public class OrderService {
     BOOrderAJAXWebService boOrderAJAXWebService;
 
     public Response search(Request request) {
-        BOSearchOrderRequest boSearchOrderRequest = request.bean(BOSearchOrderRequest.class);
-        BOSearchOrderResponse boSearchOrderResponse = boOrderAJAXWebService.search(boSearchOrderRequest);
-        return Response.bean(boSearchOrderResponse);
+        BOSearchOrderAJAXRequest boSearchOrderAJAXRequest = request.bean(BOSearchOrderAJAXRequest.class);
+        BOSearchOrderAJAXResponse boSearchOrderAJAXResponse = boOrderAJAXWebService.search(boSearchOrderAJAXRequest);
+        return Response.bean(boSearchOrderAJAXResponse);
     }
 }

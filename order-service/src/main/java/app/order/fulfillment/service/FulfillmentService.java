@@ -2,11 +2,11 @@ package app.order.fulfillment.service;
 
 import app.order.api.fulfillment.BOCreateFulfillmentRequest;
 import app.order.api.fulfillment.BOCreateFulfillmentResponse;
+import app.order.api.fulfillment.BOGetFulfillmentResponse;
 import app.order.api.fulfillment.BOSearchFulfillmentRequest;
 import app.order.api.fulfillment.BOSearchFulfillmentResponse;
 import app.order.api.fulfillment.BOUpdateFulfillmentRequest;
 import app.order.api.fulfillment.BOUpdateFulfillmentResponse;
-import app.order.api.fulfillment.GetFulfillmentResponse;
 import app.order.api.order.CompleteFulfillment;
 import app.order.fulfillment.domain.Fulfillment;
 import app.order.fulfillment.domain.Status;
@@ -64,14 +64,14 @@ public class FulfillmentService {
         return boCreateFulfillmentResponse;
     }
 
-    public GetFulfillmentResponse get(String id) {
+    public BOGetFulfillmentResponse get(String id) {
         Fulfillment fulfillment = fulfillmentCollection.get(id).orElseThrow(() -> new NotFoundException("can't get fulfillment with id: " + id));
-        GetFulfillmentResponse getFulfillmentResponse = new GetFulfillmentResponse();
+        BOGetFulfillmentResponse boGetFulfillmentResponse = new BOGetFulfillmentResponse();
         //orderId won't show in response
-        getFulfillmentResponse.id = fulfillment.id;
-        getFulfillmentResponse.items = fulfillment.items;
-        getFulfillmentResponse.status = fulfillment.status.toString();
-        return getFulfillmentResponse;
+        boGetFulfillmentResponse.id = fulfillment.id;
+        boGetFulfillmentResponse.items = fulfillment.items;
+        boGetFulfillmentResponse.status = fulfillment.status.toString();
+        return boGetFulfillmentResponse;
     }
 
     public void delete(String id) {

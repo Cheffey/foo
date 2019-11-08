@@ -1,6 +1,7 @@
 package app.order.web;
 
 import app.order.api.OrderWebService;
+import app.order.api.order.GetOrderAJAXResponse;
 import app.order.api.order.GetOrderResponse;
 import core.framework.inject.Inject;
 import core.framework.web.Request;
@@ -30,7 +31,11 @@ public class HomeController {
 
     public Response get(Request request) {
         String id = request.pathParam("id");
-        GetOrderResponse getOrderResponse = OrderWebService.get(id);
-        return Response.bean(getOrderResponse);
+        GetOrderAJAXResponse getOrderAJAXResponse = buildGetOrderAJAXResponse(OrderWebService.get(id));
+        return Response.bean(getOrderAJAXResponse);
+    }
+
+    private GetOrderAJAXResponse buildGetOrderAJAXResponse(GetOrderResponse getOrderResponse){
+        return null;
     }
 }

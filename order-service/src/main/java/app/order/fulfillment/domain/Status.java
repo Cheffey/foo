@@ -3,16 +3,16 @@ package app.order.fulfillment.domain;
 import core.framework.mongo.MongoEnumValue;
 
 public enum Status {
-    @MongoEnumValue("pending")
+    @MongoEnumValue("PENDING")
     PENDING,
-    @MongoEnumValue("in_transit")
+    @MongoEnumValue("IN_TRANSIT")
     IN_TRANSIT,
-    @MongoEnumValue("in_cooking")
+    @MongoEnumValue("IN_COOKING")
     IN_COOKING,
-    @MongoEnumValue("food_ready")
+    @MongoEnumValue("FOOD_READY")
     FOOD_READY,
-    @MongoEnumValue("delivered")
+    @MongoEnumValue("DELIVERED")
     DELIVERED,
-    @MongoEnumValue("cancelled")
+    @MongoEnumValue("CANCELLED")
     CANCELLED
 }

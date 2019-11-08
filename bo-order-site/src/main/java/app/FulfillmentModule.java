@@ -1,7 +1,7 @@
 package app;
 
-import app.order.api.BOFulfillmentAJAXWebService;
 import app.order.api.BOFulfillmentWebService;
+import app.order.api.fulfillment.BOFulfillmentAJAXWebService;
 import core.framework.module.Module;
 
 /**
@@ -12,5 +12,5 @@ public class FulfillmentModule extends Module {
     protected void initialize() {
         api().client(BOFulfillmentWebService.class, requiredProperty("app.order.service.URL"));
         api().client(BOFulfillmentAJAXWebService.class, requiredProperty("app.order.service.URL"));
-    }
+        }
 }

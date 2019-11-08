@@ -1,6 +1,6 @@
 package app;
 
-import app.order.api.FulfillmentAJAXWebService;
+import app.order.api.fulfillment.FulfillmentAJAXWebService;
 import app.order.api.FulfillmentWebService;
 import app.order.web.FulfillmentAJAXWebServiceImpl;
 import core.framework.module.Module;
@@ -11,7 +11,7 @@ import core.framework.module.Module;
 public class FulfillmentModule extends Module {
     @Override
     protected void initialize() {
-        api().client(FulfillmentWebService.class, requiredProperty("app.order.service.URL"));
+        api().client(FulfillmentWebService.class, requiredProperty("app.order.serviceURL"));
         api().service(FulfillmentAJAXWebService.class, bind(FulfillmentAJAXWebServiceImpl.class));
     }
 }

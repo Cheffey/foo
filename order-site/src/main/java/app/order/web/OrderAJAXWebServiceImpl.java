@@ -1,11 +1,17 @@
 package app.order.web;
 
-import app.order.api.OrderAJAXWebService;
 import app.order.api.OrderWebService;
+import app.order.api.order.CancelOrderAJAXResponse;
 import app.order.api.order.CancelOrderResponse;
+import app.order.api.order.CreateOrderAJAXRequest;
+import app.order.api.order.CreateOrderAJAXResponse;
 import app.order.api.order.CreateOrderRequest;
 import app.order.api.order.CreateOrderResponse;
+import app.order.api.order.GetOrderAJAXResponse;
 import app.order.api.order.GetOrderResponse;
+import app.order.api.order.OrderAJAXWebService;
+import app.order.api.order.SearchOrderAJAXRequest;
+import app.order.api.order.SearchOrderAJAXResponse;
 import app.order.api.order.SearchOrderRequest;
 import app.order.api.order.SearchOrderResponse;
 import core.framework.inject.Inject;
@@ -18,22 +24,46 @@ public class OrderAJAXWebServiceImpl implements OrderAJAXWebService {
     OrderWebService orderWebService;
 
     @Override
-    public CancelOrderResponse cancel(String id) {
-        return orderWebService.cancel(id);
+    public CancelOrderAJAXResponse cancel(String id) {
+        return buildCancelOrderAJAXResponse(orderWebService.cancel(id));
     }
 
     @Override
-    public SearchOrderResponse search(SearchOrderRequest request) {
-        return orderWebService.search(request);
+    public SearchOrderAJAXResponse search(SearchOrderAJAXRequest request) {
+        return buildSearchOrderAJAXResponse(orderWebService.search(searchOrderRequest(request)));
     }
 
     @Override
-    public CreateOrderResponse create(CreateOrderRequest request) {
-        return orderWebService.create(request);
+    public CreateOrderAJAXResponse create(CreateOrderAJAXRequest request) {
+        return buildCreateOrderAJAXResponse(orderWebService.create(createOrderRequest(request)));
     }
 
     @Override
-    public GetOrderResponse get(String id) {
-        return orderWebService.get(id);
+    public GetOrderAJAXResponse get(String id) {
+        return buildGetOrderAJAXResponse(orderWebService.get(id));
+    }
+
+    private GetOrderAJAXResponse buildGetOrderAJAXResponse(GetOrderResponse getOrderResponse) {
+        return null;
+    }
+
+    private CancelOrderAJAXResponse buildCancelOrderAJAXResponse(CancelOrderResponse cancelOrderResponse) {
+        return null;
+    }
+
+    private CreateOrderAJAXResponse buildCreateOrderAJAXResponse(CreateOrderResponse CreateOrderResponse) {
+        return null;
+    }
+
+    private SearchOrderAJAXResponse buildSearchOrderAJAXResponse(SearchOrderResponse SearchOrderResponse) {
+        return null;
+    }
+
+    private SearchOrderRequest searchOrderRequest(SearchOrderAJAXRequest searchOrderAJAXRequest) {
+        return null;
+    }
+
+    private CreateOrderRequest createOrderRequest(CreateOrderAJAXRequest CreateOrderAJAXRequest) {
+        return null;
     }
 }
