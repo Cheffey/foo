@@ -3,5 +3,5 @@ package app.order.service;
 /**
  * @author Cheffey
  */
-public class OrderSiteService {
+public class FulfillmentService {
 }
