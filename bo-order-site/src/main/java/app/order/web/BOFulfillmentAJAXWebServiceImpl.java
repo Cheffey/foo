@@ -1,11 +1,11 @@
 package app.order.web;
 
+import app.order.api.BOFulfillmentAJAXWebService;
 import app.order.api.BOFulfillmentWebService;
 import app.order.api.fulfillment.BOCreateFulfillmentAJAXRequest;
 import app.order.api.fulfillment.BOCreateFulfillmentAJAXResponse;
 import app.order.api.fulfillment.BOCreateFulfillmentRequest;
 import app.order.api.fulfillment.BOCreateFulfillmentResponse;
-import app.order.api.fulfillment.BOFulfillmentAJAXWebService;
 import app.order.api.fulfillment.BOGetFulfillmentAJAXResponse;
 import app.order.api.fulfillment.BOGetFulfillmentResponse;
 import app.order.api.fulfillment.BOSearchFulfillmentAJAXRequest;
@@ -52,30 +52,37 @@ public class BOFulfillmentAJAXWebServiceImpl implements BOFulfillmentAJAXWebServ
 
 
     private BOGetFulfillmentAJAXResponse buildGetFulfillmentAJAXResponse(BOGetFulfillmentResponse boGetFulfillmentResponse) {
+        boGetFulfillmentResponse.id = "";
         return null;
     }
 
     private BOCreateFulfillmentAJAXResponse buildCreateFulfillmentAJAXResponse(BOCreateFulfillmentResponse boCreateFulfillmentResponse) {
+        boCreateFulfillmentResponse.id = "";
         return null;
     }
 
     private BOCreateFulfillmentRequest createFulfillmentRequest(BOCreateFulfillmentAJAXRequest boCreateFulfillmentAJAXRequest) {
+        boCreateFulfillmentAJAXRequest.orderId = "";
         return null;
     }
 
     private BOUpdateFulfillmentAJAXResponse buildUpdateFulfillmentAJAXResponse(BOUpdateFulfillmentResponse boUpdateFulfillmentResponse) {
+        boUpdateFulfillmentResponse.id = "";
         return null;
     }
 
     private BOUpdateFulfillmentRequest updateFulfillmentRequest(BOUpdateFulfillmentAJAXRequest boUpdateFulfillmentAJAXRequest) {
+        boUpdateFulfillmentAJAXRequest.orderId = "";
         return null;
     }
 
     private BOSearchFulfillmentAJAXResponse buildSearchFulfillmentAJAXResponse(BOSearchFulfillmentResponse boSearchFulfillmentResponse) {
+        boSearchFulfillmentResponse.total = 0;
         return null;
     }
 
     private BOSearchFulfillmentRequest searchFulfillmentRequest(BOSearchFulfillmentAJAXRequest boSearchFulfillmentAJAXRequest) {
+        boSearchFulfillmentAJAXRequest.id = "";
         return null;
     }
 

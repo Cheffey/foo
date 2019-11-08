@@ -3,7 +3,7 @@ package app.order.web;
 import app.order.api.order.BOCreateOrderAJAXRequest;
 import app.order.api.order.BOCreateOrderAJAXResponse;
 import app.order.api.order.BOGetOrderAJAXResponse;
-import app.order.api.order.BOOrderAJAXWebService;
+import app.order.api.BOOrderAJAXWebService;
 import app.order.api.order.BOSearchOrderAJAXRequest;
 import app.order.api.order.BOSearchOrderAJAXResponse;
 import app.order.api.order.BOUpdateOrderAJAXRequest;

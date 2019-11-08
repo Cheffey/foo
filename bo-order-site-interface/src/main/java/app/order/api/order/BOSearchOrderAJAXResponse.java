@@ -11,7 +11,7 @@ public class BOSearchOrderAJAXResponse {
     @Property(name = "total")
     public Integer total;
 
-    @Property(name="orderviews")
+    @Property(name = "orderviews")
     public List<Order> orderViews;
 
     public static class Order {

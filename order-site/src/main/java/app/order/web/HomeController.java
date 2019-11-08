@@ -12,7 +12,7 @@ import core.framework.web.Response;
  */
 public class HomeController {
     @Inject
-    OrderWebService OrderWebService;
+    OrderWebService orderWebService;
 
     public Response cancel(String id, Request request) {
         return null;
@@ -31,11 +31,12 @@ public class HomeController {
 
     public Response get(Request request) {
         String id = request.pathParam("id");
-        GetOrderAJAXResponse getOrderAJAXResponse = buildGetOrderAJAXResponse(OrderWebService.get(id));
+        GetOrderAJAXResponse getOrderAJAXResponse = buildGetOrderAJAXResponse(orderWebService.get(id));
         return Response.bean(getOrderAJAXResponse);
     }
 
-    private GetOrderAJAXResponse buildGetOrderAJAXResponse(GetOrderResponse getOrderResponse){
+    private GetOrderAJAXResponse buildGetOrderAJAXResponse(GetOrderResponse getOrderResponse) {
+        getOrderResponse.address = "";
         return null;
     }
 }

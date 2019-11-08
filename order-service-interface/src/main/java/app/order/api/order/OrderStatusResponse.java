@@ -8,6 +8,6 @@ import java.util.List;
  * @author Cheffey
  */
 public class OrderStatusResponse {
-    @Property(name="statuses")
+    @Property(name = "statuses")
     public List<String> statuses;
 }

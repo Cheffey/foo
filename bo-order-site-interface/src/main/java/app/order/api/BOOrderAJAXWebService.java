@@ -1,5 +1,12 @@
-package app.order.api.order;
+package app.order.api;
 
+import app.order.api.order.BOCreateOrderAJAXRequest;
+import app.order.api.order.BOCreateOrderAJAXResponse;
+import app.order.api.order.BOGetOrderAJAXResponse;
+import app.order.api.order.BOSearchOrderAJAXRequest;
+import app.order.api.order.BOSearchOrderAJAXResponse;
+import app.order.api.order.BOUpdateOrderAJAXRequest;
+import app.order.api.order.BOUpdateOrderAJAXResponse;
 import core.framework.api.http.HTTPStatus;
 import core.framework.api.web.service.DELETE;
 import core.framework.api.web.service.GET;

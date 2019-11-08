@@ -1,5 +1,6 @@
 package app.order.web;
 
+import app.order.api.FulfillmentAJAXWebService;
 import app.order.api.FulfillmentWebService;
 import app.order.api.fulfillment.CancelFulfillmentAJAXResponse;
 import app.order.api.fulfillment.CancelFulfillmentResponse;
@@ -7,7 +8,6 @@ import app.order.api.fulfillment.CreateFulfillmentAJAXRequest;
 import app.order.api.fulfillment.CreateFulfillmentAJAXResponse;
 import app.order.api.fulfillment.CreateFulfillmentRequest;
 import app.order.api.fulfillment.CreateFulfillmentResponse;
-import app.order.api.fulfillment.FulfillmentAJAXWebService;
 import app.order.api.fulfillment.FulfillmentStatusAJAXResponse;
 import app.order.api.fulfillment.FulfillmentStatusResponse;
 import app.order.api.fulfillment.GetFulfillmentAJAXResponse;
@@ -55,30 +55,37 @@ public class FulfillmentAJAXWebServiceImpl implements FulfillmentAJAXWebService 
 
 
     private GetFulfillmentAJAXResponse buildGetFulfillmentAJAXResponse(GetFulfillmentResponse getFulfillmentResponse) {
+        getFulfillmentResponse.id = "";
         return null;
     }
 
     private CancelFulfillmentAJAXResponse buildCancelFulfillmentAJAXResponse(CancelFulfillmentResponse cancelFulfillmentResponse) {
+        cancelFulfillmentResponse.notifyAll();
         return null;
     }
 
     private FulfillmentStatusAJAXResponse buildFulfillmentStatusAJAXResponse(FulfillmentStatusResponse fulfillmentStatusResponse) {
+        fulfillmentStatusResponse.status = "";
         return null;
     }
 
-    private CreateFulfillmentAJAXResponse buildCreateFulfillmentAJAXResponse(CreateFulfillmentResponse CreateFulfillmentResponse) {
+    private CreateFulfillmentAJAXResponse buildCreateFulfillmentAJAXResponse(CreateFulfillmentResponse createFulfillmentResponse) {
+        createFulfillmentResponse.id = "";
         return null;
     }
 
-    private SearchFulfillmentAJAXResponse buildSearchFulfillmentAJAXResponse(SearchFulfillmentResponse SearchFulfillmentResponse) {
+    private SearchFulfillmentAJAXResponse buildSearchFulfillmentAJAXResponse(SearchFulfillmentResponse searchFulfillmentResponse) {
+        searchFulfillmentResponse.total = 0;
         return null;
     }
 
-    private SearchFulfillmentRequest searchFulfillmentRequest(SearchFulfillmentAJAXRequest searchFulfillmentAJAXRequest){
+    private SearchFulfillmentRequest searchFulfillmentRequest(SearchFulfillmentAJAXRequest searchFulfillmentAJAXRequest) {
+        searchFulfillmentAJAXRequest.id = "";
         return null;
     }
 
-    private CreateFulfillmentRequest createFulfillmentRequest(CreateFulfillmentAJAXRequest CreateFulfillmentAJAXRequest){
+    private CreateFulfillmentRequest createFulfillmentRequest(CreateFulfillmentAJAXRequest createFulfillmentAJAXRequest) {
+        createFulfillmentAJAXRequest.orderId = "";
         return null;
     }
 }

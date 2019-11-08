@@ -11,9 +11,9 @@ public class BOUpdateFulfillmentAJAXRequest {
     @Property(name = "order_id")
     public String orderId;
 
-    @Property(name="items")
+    @Property(name = "items")
     public List<String> items;
 
-    @Property(name="status")
+    @Property(name = "status")
     public String status;
 }

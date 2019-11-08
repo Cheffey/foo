@@ -13,6 +13,6 @@ public class CreateFulfillmentAJAXRequest {
     public String orderId;
 
     @NotNull
-    @Property(name="items")
+    @Property(name = "items")
     public List<String> items;
 }

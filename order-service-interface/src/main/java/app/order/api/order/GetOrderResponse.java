@@ -11,7 +11,7 @@ public class GetOrderResponse {
     @Property(name = "id")
     public String id;
 
-    @Property(name="fulfillments")
+    @Property(name = "fulfillments")
     public List<CompleteFulfillment> fulfillments;
 
     @Property(name = "address")

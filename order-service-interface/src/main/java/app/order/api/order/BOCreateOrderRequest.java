@@ -12,15 +12,15 @@ import java.util.List;
  */
 public class BOCreateOrderRequest {
     @NotNull
-    @Property(name="items")
+    @Property(name = "items")
     public List<String> items;
 
     @NotNull
     @NotBlank
-    @Property(name="address")
+    @Property(name = "address")
     public String address;
 
     @Min(0)
-    @Property(name="tip")
+    @Property(name = "tip")
     public Double tip;
 }

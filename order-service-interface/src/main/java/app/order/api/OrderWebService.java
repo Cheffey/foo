@@ -25,6 +25,7 @@ public interface OrderWebService {
 
     @PUT
     @Path("/order/:id/cancel")
+    //todo void
     CancelOrderResponse cancel(@PathParam("id") String id);
 
     @PUT

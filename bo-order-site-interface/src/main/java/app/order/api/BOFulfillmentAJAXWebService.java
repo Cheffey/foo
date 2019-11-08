@@ -1,5 +1,12 @@
-package app.order.api.fulfillment;
+package app.order.api;
 
+import app.order.api.fulfillment.BOCreateFulfillmentAJAXRequest;
+import app.order.api.fulfillment.BOCreateFulfillmentAJAXResponse;
+import app.order.api.fulfillment.BOGetFulfillmentAJAXResponse;
+import app.order.api.fulfillment.BOSearchFulfillmentAJAXRequest;
+import app.order.api.fulfillment.BOSearchFulfillmentAJAXResponse;
+import app.order.api.fulfillment.BOUpdateFulfillmentAJAXRequest;
+import app.order.api.fulfillment.BOUpdateFulfillmentAJAXResponse;
 import core.framework.api.http.HTTPStatus;
 import core.framework.api.web.service.DELETE;
 import core.framework.api.web.service.GET;

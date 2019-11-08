@@ -17,6 +17,6 @@ public class CreateOrderResponse {
     @Property(name = "total_cost")
     public Double totalCost;
 
-    @Property(name="fulfillments")
+    @Property(name = "fulfillments")
     public List<CompleteFulfillment> fulfillments;
 }

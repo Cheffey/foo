@@ -1,7 +1,7 @@
 package app.order.service;
 
 import app.order.api.BOOrderWebService;
-import app.order.api.order.BOOrderAJAXWebService;
+import app.order.api.BOOrderAJAXWebService;
 import app.order.api.order.BOSearchOrderAJAXRequest;
 import app.order.api.order.BOSearchOrderAJAXResponse;
 import core.framework.inject.Inject;

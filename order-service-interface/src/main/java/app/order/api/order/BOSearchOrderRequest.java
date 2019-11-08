@@ -11,12 +11,12 @@ public class BOSearchOrderRequest {
     @Property(name = "id")
     public String id;
 
-    @Property(name="items")
+    @Property(name = "items")
     public List<String> items;
 
-    @Property(name="address")
+    @Property(name = "address")
     public String address;
 
-    @Property(name="tip")
+    @Property(name = "tip")
     public Double tip;
 }

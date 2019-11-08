@@ -11,9 +11,9 @@ public class GetFulfillmentResponse {
     @Property(name = "id")
     public String id;
 
-    @Property(name="items")
+    @Property(name = "items")
     public List<String> items;
 
-    @Property(name="status")
+    @Property(name = "status")
     public String status;
 }

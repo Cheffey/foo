@@ -13,6 +13,6 @@ public class CreateFulfillmentRequest {
     public String orderId;
 
     @NotNull
-    @Property(name="items")
+    @Property(name = "items")
     public List<String> items;
 }
